@@ -1,4 +1,5 @@
 import userService from "../services/userService";
+import CRUDService from "../services/CRUDService";
 
 let handleLogin = async (req, res) => {
     let email = req.body.email;
@@ -42,9 +43,66 @@ let handleGetAllUsers = async (req, res) => {
     })
     
 }
-    
-    
+let handleCreateNewUsers = async (req, res) => {
+    let message = await userService.createNewUser(req.body);
+    console.log(message);
+    return res.status(200).json(message);
+}
+
+let handleEditUser = async (req, res) => {
+   let data = req.body;
+   let message = await CRUDService.updateUserData(data);
+   return res.status(200).json(message);
+
+}
+
+let handleDeleteUser = async (req, res) => {
+    if (!req.body.id){
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: 'Missing required parameter'
+        })
+    }
+    let message = await userService.deleteUser(req.body.id);
+    return res.status(200).json(message);
+}
+let updateUserData =  (data) => {
+    return new Promise (async (resolve, reject) => {
+        try{
+            if(!data.id){
+                resolve({
+                    errCode: 2,
+                    errMessage: 'Missing required parameter'
+                })
+            }
+          
+            let user = await db.User.findOne({
+            where: {id: data.id},
+            raw : false
+            })
+            if(user ){
+                user.firstName= data.firstName,
+                user.lastName= data.lastName,
+                user.address= data.address
+                await user.save();
+            }
+            resolve({
+                errCode: 0,
+                errMessage: 'Update the user successfully'
+            });
+        }catch(e){
+            reject({
+                errCode: 1,
+                errMessage: 'User not found'
+            });
+        }
+    })
+}
 module.exports = {
     handleLogin: handleLogin,
-    handleGetAllUsers: handleGetAllUsers
+    handleGetAllUsers:handleGetAllUsers,
+    handleCreateNewUsers:handleCreateNewUsers,
+    handleEditUser:handleEditUser,
+    handleDeleteUser:handleDeleteUser,
+    updateUserData:updateUserData
 }
