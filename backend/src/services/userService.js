@@ -13,9 +13,9 @@ let handleUserLogin = (email, password) => {
                 //user already exist
 
                 let user = await db.User.findOne({
-                    //attributes: ['email', 'roleId', 'password'],
+                    attributes: ['email', 'roleId', 'password'],
                     where: { email: email },
-                    //raw: true
+                    raw: true
                 });
                 if (user) {
                     //compare password
@@ -24,7 +24,7 @@ let handleUserLogin = (email, password) => {
                     if (check) {
                         userData.errorCode = 0;
                         userData.errMessage = 'Ok';
-                        //delete user.password;
+                        delete user.password;
                         userData.user = user;
                         // userData.errorCode = 3;
                         // userData.errMessage = 'Wrong Password';
