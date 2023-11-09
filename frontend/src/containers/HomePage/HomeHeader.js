@@ -4,6 +4,7 @@ import './HomeHeader.scss'
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../utils';
 import { changeLaunguageApp } from '../../store/actions/appActions';
+
 class HomeHeader extends Component {
 
     changeLaunguage = (language) =>{
@@ -106,7 +107,7 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.admin.isLoggedIn,
+        isLoggedIn: state.user.isLoggedIn,
         language: state.app.language
     };
 };
