@@ -64,33 +64,44 @@ class ModalUser extends Component {
                     <div className="modal-user-body">
                         <div className="input-container">
                             <label>Email</label>
-                            <input type="text" 
-                            onChange={(event)=>{this.handleOnChangeInput(event, "email")}} 
-                            value = {this.state.email}/>
+                            <input 
+                                type="text" 
+                                onChange={(event)=>{this.handleOnChangeInput(event, "email")}} 
+                                value = {this.state.email}
+                            />
                         </div>
                         <div className="input-container">
                             <label>Password</label>
                             <input 
-                            type="password" 
-                            onChange={(event)=>{this.handleOnChangeInput(event, "password")}}
-                            value = {this.state.password}/>
+                                type="password" 
+                                onChange={(event)=>{this.handleOnChangeInput(event, "password")}}
+                                value = {this.state.password}
+                            />
                             
                         </div>
                         <div className="input-container">
                             <label>First Name</label>
-                            <input type="text" 
-                            onChange={(event)=>{this.handleOnChangeInput(event, "firstName")}}
-                            value = {this.state.firstName}/>
+                            <input 
+                                type="text" 
+                                onChange={(event)=>{this.handleOnChangeInput(event, "firstName")}}
+                                value = {this.state.firstName}
+                            />
                         </div>
                         <div className="input-container">
                             <label>Last Name</label>
-                            <input type="text" onChange={(event)=>{this.handleOnChangeInput(event, "lastName")}}
-                            value = {this.state.lastName}/>
+                            <input 
+                                type="text" 
+                                onChange={(event)=>{this.handleOnChangeInput(event, "lastName")}}
+                                value = {this.state.lastName}
+                            />
                         </div>
                         <div className="input-container max-width-input">
                             <label>Address</label>
-                            <input type="text" onChange={(event)=>{this.handleOnChangeInput(event, "address")}}
-                            value = {this.state.address}/>
+                            <input 
+                                type="text" 
+                                onChange={(event)=>{this.handleOnChangeInput(event, "address")}}
+                                value = {this.state.address}
+                            />
                         </div>
                     </div>
 
