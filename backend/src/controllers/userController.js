@@ -66,43 +66,12 @@ let handleDeleteUser = async (req, res) => {
     let message = await userService.deleteUser(req.body.id);
     return res.status(200).json(message);
 }
-let updateUserData =  (data) => {
-    return new Promise (async (resolve, reject) => {
-        try{
-            if(!data.id){
-                resolve({
-                    errCode: 2,
-                    errMessage: 'Missing required parameter'
-                })
-            }
-          
-            let user = await db.User.findOne({
-            where: {id: data.id},
-            raw : false
-            })
-            if(user ){
-                user.firstName= data.firstName,
-                user.lastName= data.lastName,
-                user.address= data.address
-                await user.save();
-            }
-            resolve({
-                errCode: 0,
-                errMessage: 'Update the user successfully'
-            });
-        }catch(e){
-            reject({
-                errCode: 1,
-                errMessage: 'User not found'
-            });
-        }
-    })
-}
+
 module.exports = {
     handleLogin: handleLogin,
     handleGetAllUsers:handleGetAllUsers,
     handleCreateNewUsers:handleCreateNewUsers,
     handleEditUser:handleEditUser,
     handleDeleteUser:handleDeleteUser,
-    updateUserData:updateUserData
+   
 }

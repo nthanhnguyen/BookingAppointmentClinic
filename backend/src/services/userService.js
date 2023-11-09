@@ -81,7 +81,38 @@ let hashUserPassword = (password) => {
         }
     })
 }
-
+let updateUserData =  (data) => {
+    return new Promise (async (resolve, reject) => {
+        try{
+            if(!data.id){
+                resolve({
+                    errCode: 2,
+                    errMessage: 'Missing required parameter'
+                })
+            }
+          
+            let user = await db.User.findOne({
+            where: {id: data.id},
+            raw : false
+            })
+            if(user ){
+                user.firstName= data.firstName,
+                user.lastName= data.lastName,
+                user.address= data.address
+                await user.save();
+            }
+            resolve({
+                errCode: 0,
+                errMessage: 'Update the user successfully'
+            });
+        }catch(e){
+            reject({
+                errCode: 1,
+                errMessage: 'User not found'
+            });
+        }
+    })
+}
 let getAllUsers = (userId) => {
     return new Promise(async (resolve, reject) => {
         try{
@@ -117,20 +148,22 @@ let createNewUser =(data) => {
             if(check === true){
                 resolve({
                     errCode: 1,
-                    message: `Your's Email is already exist in your system. Plz try other email!`
+                    errMessage: `Your's Email is already exist in your system. Plz try other email!`
                 })
-            }
-            let hashPasswordFormBcrypt = await hashUserPassword(data.password);
-            await db.User.create({
-                email: data.email,
-                password: hashPasswordFormBcrypt,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                address: data.address,
-                phonenumber: data.phonenumber,
-                gender: data.gender === '1' ? true : false,
-                roleId: data.roleId,
+            }else{
+                let hashPasswordFormBcrypt = await hashUserPassword(data.password);
+                await db.User.create({
+                    email: data.email,
+                    password: hashPasswordFormBcrypt,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phonenumber: data.phonenumber,
+                    gender: data.gender === '1' ? true : false,
+                    roleId: data.roleId,
             })
+            }
+            
 
             resolve({
                 errCode: 0,
@@ -167,5 +200,6 @@ module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
     createNewUser: createNewUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    updateUserData: updateUserData
 }

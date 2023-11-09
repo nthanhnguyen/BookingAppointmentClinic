@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, createNewUserService } from '../../services/userService';
 import { bind } from 'lodash';
-import ModalUser from './ModalUser.js';
+import ModalUser from './ModalUser';
 
 class UserManage extends Component {
 
@@ -17,28 +17,46 @@ class UserManage extends Component {
     }
 
     async componentDidMount() {
-        let response = await getAllUsers('ALL');
-        if (response && response.errCode === 0) {
-            this.setState({
-                arrUsers: response.users
-            })
-        }
-        console.log('get user : ', response);
 
+      await this.getAllUsersFromReact();  
     }
-
+    getAllUsersFromReact =async () => {
+        let response = await getAllUsers('ALL');
+            if (response && response.errCode === 0) {
+                this.setState({
+                    arrUsers: response.users
+                })
+            }
+            console.log('get user : ', response);
+        }
     handleAddNewUser = () => {
         this.setState({
-            isOpenModalUser: true,
+        isOpenModalUser: true,
         })
     }
+    
 
     toggleUserModal = () => {
         this.setState({
             isOpenModalUser: !this.state.isOpenModalUser,
         })
     }
-
+    createNewuser = async (data) => {
+        try {
+            let response = await createNewUserService(data);
+            if (response && response.errCode !== 0) {
+                alert(response.errMessage)
+            }else{
+                await this.getAllUsersFromReact();
+                this.setState({
+                    isOpenModalUser: false
+            })
+            }
+        } catch (e){
+            console.log(e);
+        }
+    }
+    
     render() {
         let arrUsers = this.state.arrUsers;
         console.log(arrUsers)
@@ -47,16 +65,18 @@ class UserManage extends Component {
                 <ModalUser
                     isOpen={this.state.isOpenModalUser}
                     toggleFormParent={this.toggleUserModal}
+                    createNewuser={this.createNewuser}
                     test={'abc'}
                 />
                 <div className="title text-center">Manage users</div>
                 <div className="mx-1">
                     <button className="btn btn-primary px-3"
-                        onClick={() => this.handleAddNewUser()}
+                        onClick= {() => this.handleAddNewUser()}
                     ><i className="fa fa-plus"></i> Add new users</button>
                 </div>
 
                 <div className="users-table mt-3 mx-1" ><table id="customers">
+                <tbody> 
                     <tr>
                         <th>Email</th>
                         <th>First Name</th>
@@ -64,12 +84,12 @@ class UserManage extends Component {
                         <th>Address</th>
                         <th>Actions</th>
                     </tr>
-
+              
                     {arrUsers && arrUsers.map((item, index) => {
-                        console.log('check map', item, index)
+                        
                         return (
-                            <tr>
-
+                            <tr key={index}>
+                                
                                 <td>{item.email}</td>
                                 <td>{item.firstName}</td>
                                 <td>{item.lastName}</td>
@@ -83,7 +103,7 @@ class UserManage extends Component {
                             </tr>
                         )
                     })}
-
+                </tbody>
 
 
                 </table>

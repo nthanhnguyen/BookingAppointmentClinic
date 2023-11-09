@@ -56,10 +56,7 @@ class Login extends Component {
                 })
             }
         }
-
-        console.log('a',error.response);
         
-       
        }
     }
     handleShowHidePassword = () => {
