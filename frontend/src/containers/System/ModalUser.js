@@ -8,11 +8,11 @@ class ModalUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email:'',
-            password:'',
-            firstName:'',
-            lastName:'',
-            address:''
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: ''
         }
     }
 
@@ -24,21 +24,21 @@ class ModalUser extends Component {
     }
 
     handleOnChangeInput = (event, id) => {
-        let copyState ={...this.state};
+        let copyState = { ...this.state };
         copyState[id] = event.target.value;
-        this.setState({copyState});  
+        this.setState({ copyState });
     }
-    handleAddNewUser =  () => {
+    handleAddNewUser = () => {
         let isValid = this.checkValidateInput();
-        if(isValid===true){
-            this.props.createNewUser(this.state,'abc');
-            
+        if (isValid === true) {
+            this.props.createNewUser(this.state, 'abc');
+
         }
-        console.log('data modal',this.state);
+        console.log('data modal', this.state);
     }
     checkValidateInput = () => {
         let isValid = true;
-        let arrInput = ['email', 'password', 'firstName', 'lastName','address'];
+        let arrInput = ['email', 'password', 'firstName', 'lastName', 'address'];
         for (let i = 0; i < arrInput.length; i++) {
             if (this.state[arrInput[i]]) {
                 isValid = false;
@@ -50,7 +50,7 @@ class ModalUser extends Component {
     }
 
     render() {
-    
+
 
         return (
             <Modal
@@ -64,55 +64,55 @@ class ModalUser extends Component {
                     <div className="modal-user-body">
                         <div className="input-container">
                             <label>Email</label>
-                            <input 
-                                type="text" 
-                                onChange={(event)=>{this.handleOnChangeInput(event, "email")}} 
-                                value = {this.state.email}
+                            <input
+                                type="text"
+                                onChange={(event) => { this.handleOnChangeInput(event, "email") }}
+                                value={this.state.email}
                             />
                         </div>
                         <div className="input-container">
                             <label>Password</label>
-                            <input 
-                                type="password" 
-                                onChange={(event)=>{this.handleOnChangeInput(event, "password")}}
-                                value = {this.state.password}
+                            <input
+                                type="password"
+                                onChange={(event) => { this.handleOnChangeInput(event, "password") }}
+                                value={this.state.password}
                             />
-                            
+
                         </div>
                         <div className="input-container">
                             <label>First Name</label>
-                            <input 
-                                type="text" 
-                                onChange={(event)=>{this.handleOnChangeInput(event, "firstName")}}
-                                value = {this.state.firstName}
+                            <input
+                                type="text"
+                                onChange={(event) => { this.handleOnChangeInput(event, "firstName") }}
+                                value={this.state.firstName}
                             />
                         </div>
                         <div className="input-container">
                             <label>Last Name</label>
-                            <input 
-                                type="text" 
-                                onChange={(event)=>{this.handleOnChangeInput(event, "lastName")}}
-                                value = {this.state.lastName}
+                            <input
+                                type="text"
+                                onChange={(event) => { this.handleOnChangeInput(event, "lastName") }}
+                                value={this.state.lastName}
                             />
                         </div>
                         <div className="input-container max-width-input">
                             <label>Address</label>
-                            <input 
-                                type="text" 
-                                onChange={(event)=>{this.handleOnChangeInput(event, "address")}}
-                                value = {this.state.address}
+                            <input
+                                type="text"
+                                onChange={(event) => { this.handleOnChangeInput(event, "address") }}
+                                value={this.state.address}
                             />
                         </div>
                     </div>
 
                 </ModalBody >
                 <ModalFooter>
-                    <Button color="primary" 
-                        className="px-3" 
-                        onclick={() => {this.handleAddNewUser()} }>Add new</Button > {' '}
-                    <Button color="secondary" 
-                        className="px-3" 
-                        onclick={() => { this.toggle() }}>Close</Button >
+                    <Button color="primary"
+                        className="px-3"
+                        onClick={() => { this.handleAddNewUser() }}>Add new</Button > {' '}
+                    <Button color="secondary"
+                        className="px-3"
+                        onClick={() => { this.toggle() }}>Close</Button >
                 </ModalFooter>
             </Modal>
         )
