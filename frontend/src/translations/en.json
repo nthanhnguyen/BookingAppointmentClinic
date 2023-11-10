@@ -8,7 +8,9 @@
         "select-doctor": "Choose a good doctor",
         "fee": "Checkup package",
         "check-health": "General health check",
-        "support": "Support"
+        "support": "Support",
+        "welcome": "Welcome"
+
     },
 
     "banner": {
@@ -50,17 +52,19 @@
         "userpass-wrong": "Invalid username or password!"
     },
     "menu": {
-        "system": {
-            "header": "System",
-            "system-administrator": {
-                "header": "System Administrator",
-                "user-manage": "User manage",
-                "user-redux": "Manage users using redux",
-                "register-package-group-or-account": "Register service package for group/account"
-            },
-            "system-parameter": {
-                "header": "System-parameter"
-            }
+        "admin":{
+            "manage-user": "Users System",
+            "manage-doctor":"Manage Doctors",
+            "manage-admin":"Manage admins",
+            "manage-clinic":"Manage clinic",
+            "manage-specialty":"Manage Specialty",
+            "manage-handbook":"Manage Handbook",
+            "crud":"CRUD user",
+            "crud-redux":"CRUD Redux",
+            "clinic":"Clinics",
+            "specialty":"Specialty",
+            "handbook":"Handbook"
+
         }
     },
     "system": {

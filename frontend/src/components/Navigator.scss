@@ -39,6 +39,13 @@
                     text-decoration: none;
                     color: $text-in-light;
                 }
+                &.active{
+                    a{
+                        color : orange !important;
+
+                    }
+                    background-color: #ededed;
+                }
                 .sub-menu-list {
                     display: none;
                     background-color: $bg-menu-color;
@@ -71,7 +78,7 @@
                 }
                 &.active span {
                     font-weight: 500;
-                    color: $colormain;
+                    color: orange;
                 }
                 &:hover {
                     background-color: darken($bg-menu-color, 3);
