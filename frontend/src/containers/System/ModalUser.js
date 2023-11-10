@@ -26,7 +26,9 @@ class ModalUser extends Component {
     handleOnChangeInput = (event, id) => {
         let copyState = { ...this.state };
         copyState[id] = event.target.value;
-        this.setState({ copyState });
+        this.setState({
+            ...copyState
+        })
     }
     handleAddNewUser = () => {
         let isValid = this.checkValidateInput();
@@ -40,7 +42,7 @@ class ModalUser extends Component {
         let isValid = true;
         let arrInput = ['email', 'password', 'firstName', 'lastName', 'address'];
         for (let i = 0; i < arrInput.length; i++) {
-            if (this.state[arrInput[i]]) {
+            if (!this.state[arrInput[i]]) {
                 isValid = false;
                 alert('Missing parameter ' + arrInput[i]);
                 break;
@@ -50,8 +52,6 @@ class ModalUser extends Component {
     }
 
     render() {
-
-
         return (
             <Modal
                 isOpen={this.props.isOpen}
