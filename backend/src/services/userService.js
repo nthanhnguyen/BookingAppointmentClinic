@@ -81,31 +81,31 @@ let hashUserPassword = (password) => {
         }
     })
 }
-let updateUserData =  (data) => {
-    return new Promise (async (resolve, reject) => {
-        try{
-            if(!data.id){
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id) {
                 resolve({
                     errCode: 2,
                     errMessage: 'Missing required parameter'
                 })
             }
-          
+
             let user = await db.User.findOne({
-            where: {id: data.id},
-            raw : false
+                where: { id: data.id },
+                raw: false
             })
-            if(user ){
-                user.firstName= data.firstName,
-                user.lastName= data.lastName,
-                user.address= data.address
+            if (user) {
+                user.firstName = data.firstName,
+                    user.lastName = data.lastName,
+                    user.address = data.address
                 await user.save();
             }
             resolve({
                 errCode: 0,
                 errMessage: 'Update the user successfully'
             });
-        }catch(e){
+        } catch (e) {
             reject({
                 errCode: 1,
                 errMessage: 'User not found'
@@ -115,21 +115,21 @@ let updateUserData =  (data) => {
 }
 let getAllUsers = (userId) => {
     return new Promise(async (resolve, reject) => {
-        try{
+        try {
             let users = '';
-            if(userId ==='ALL'){
+            if (userId === 'ALL') {
                 users = await db.User.findAll({
-                    attributes:{
-                        exclude:['password']
+                    attributes: {
+                        exclude: ['password']
                     }
                 });
-               
+
             }
-            if(userId && userId !== 'ALL'){
+            if (userId && userId !== 'ALL') {
                 users = await db.User.findOne({
-                    where: {id: userId},
-                    attributes:{
-                        exclude:['password']
+                    where: { id: userId },
+                    attributes: {
+                        exclude: ['password']
                     }
                 })
             }
@@ -140,17 +140,17 @@ let getAllUsers = (userId) => {
         }
     })
 }
-let createNewUser =(data) => {
+let createNewUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             //check email does not exist
             let check = await checkUserEmail(data.email);
-            if(check === true){
+            if (check === true) {
                 resolve({
                     errCode: 1,
                     errMessage: `Your's Email is already exist in your system. Plz try other email!`
                 })
-            }else{
+            } else {
                 let hashPasswordFormBcrypt = await hashUserPassword(data.password);
                 await db.User.create({
                     email: data.email,
@@ -161,25 +161,25 @@ let createNewUser =(data) => {
                     phonenumber: data.phonenumber,
                     gender: data.gender === '1' ? true : false,
                     roleId: data.roleId,
-            })
+                })
             }
-            
+
 
             resolve({
                 errCode: 0,
-                message:'OK'
+                message: 'OK'
             })
         } catch (e) {
             reject(e)
         }
     })
 }
-let deleteUser =(userId) => {
+let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         let foundUser = await db.User.findOne({
-            where: {id: userId}
+            where: { id: userId }
         })
-        if(!foundUser){
+        if (!foundUser) {
             resolve({
                 errCode: 2,
                 errMessage: `the user isn't exist`
@@ -187,7 +187,7 @@ let deleteUser =(userId) => {
         }
 
         await db.User.destroy({
-            where: {id: userId}
+            where: { id: userId }
         })
 
         resolve({
