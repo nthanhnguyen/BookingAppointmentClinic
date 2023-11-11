@@ -1,6 +1,6 @@
 {
-    "homeheader" : {
-        "speciality" : "Medical specialty",
+    "homeheader": {
+        "speciality": "Medical specialty",
         "searchdoctor": "Find a doctor by specialty",
         "health-facility": "Health facilities",
         "select-room": "Choose hospital clinic",
@@ -10,9 +10,7 @@
         "check-health": "General health check",
         "support": "Support",
         "welcome": "Welcome"
-
     },
-
     "banner": {
         "title1": "MEDICAL BACKGROUND",
         "title2": "COMPREHENSIVE HEALTH CARE",
@@ -24,7 +22,6 @@
         "child6": "Dental examination",
         "placeholder": "Find a medical specialist"
     },
-
     "common": {
         "add": "Add",
         "edit": "Edit",
@@ -52,20 +49,33 @@
         "userpass-wrong": "Invalid username or password!"
     },
     "menu": {
-        "admin":{
+        "admin": {
             "manage-user": "Users System",
-            "manage-doctor":"Manage Doctors",
-            "manage-admin":"Manage admins",
-            "manage-clinic":"Manage clinic",
-            "manage-specialty":"Manage Specialty",
-            "manage-handbook":"Manage Handbook",
-            "crud":"CRUD user",
-            "crud-redux":"CRUD Redux",
-            "clinic":"Clinics",
-            "specialty":"Specialty",
-            "handbook":"Handbook"
-
+            "manage-doctor": "Manage Doctors",
+            "manage-admin": "Manage admins",
+            "manage-clinic": "Manage clinic",
+            "manage-specialty": "Manage Specialty",
+            "manage-handbook": "Manage Handbook",
+            "crud": "CRUD user",
+            "crud-redux": "CRUD Redux",
+            "clinic": "Clinics",
+            "specialty": "Specialty",
+            "handbook": "Handbook"
         }
+    },
+    "manage-user": {
+        "add": "Add a new user",
+        "email": "Email",
+        "password": "Password",
+        "first-name": "First Name",
+        "last-name": "Last Name",
+        "phone-number": "Phone number",
+        "address": "Address",
+        "gender": "Gender",
+        "position": "Position",
+        "role": "Role",
+        "image": "Avatar",
+        "save": "Save user"
     },
     "system": {
         "user-manage": {

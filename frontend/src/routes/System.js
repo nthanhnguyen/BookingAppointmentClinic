@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
 import UserManage from '../containers/System/UserManage';
-import UserRedux from '../containers/System/UserRedux';
+import UserRedux from '../containers/System/Admin/UserRedux';
 
 import Header from '../containers/Header/Header';
 
 class System extends Component {
     render() {
 
-        const { systemMenuPath,isLoggedIn } = this.props;
+        const { systemMenuPath, isLoggedIn } = this.props;
         return (
             <React.Fragment>
                 {isLoggedIn && <Header />}
@@ -18,7 +18,7 @@ class System extends Component {
                         <Switch>
                             <Route path="/system/user-manage" component={UserManage} />
                             <Route path="/system/user-redux" component={UserRedux} />
-                            
+
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>
