@@ -28,7 +28,7 @@ let handleLogin = async (req, res) => {
 
 let handleGetAllUsers = async (req, res) => {
     let id = req.query.id;    //all, id
-    if(!id){
+    if (!id) {
         return res.status(200).json({
             errCode: 1,
             errMessage: 'Missing required parameter',
@@ -41,7 +41,7 @@ let handleGetAllUsers = async (req, res) => {
         errMessage: 'OK',
         users
     })
-    
+
 }
 let handleCreateNewUsers = async (req, res) => {
     let message = await userService.createNewUser(req.body);
@@ -50,14 +50,14 @@ let handleCreateNewUsers = async (req, res) => {
 }
 
 let handleEditUser = async (req, res) => {
-   let data = req.body;
-   let message = await CRUDService.updateUserData(data);
-   return res.status(200).json(message);
+    let data = req.body;
+    let message = await CRUDService.updateUserData(data);
+    return res.status(200).json(message);
 
 }
 
 let handleDeleteUser = async (req, res) => {
-    if (!req.body.id){
+    if (!req.body.id) {
         return res.status(200).json({
             errCode: 1,
             errMessage: 'Missing required parameter'
@@ -67,11 +67,11 @@ let handleDeleteUser = async (req, res) => {
     return res.status(200).json(message);
 }
 let getAllCode = async (req, res) => {
-    try{
+    try {
         let data = await userService.getAllCodeService(req.query.type);
         return res.status(200).json(data);
-    }catch(e){
-        console.log('Get All Code Error',e);
+    } catch (e) {
+        console.log('Get All Code Error', e);
         return res.status(200).json({
             errCode: -1,
             errMessage: 'Error From Server',
@@ -80,10 +80,10 @@ let getAllCode = async (req, res) => {
 }
 module.exports = {
     handleLogin: handleLogin,
-    handleGetAllUsers:handleGetAllUsers,
-    handleCreateNewUsers:handleCreateNewUsers,
-    handleEditUser:handleEditUser,
-    handleDeleteUser:handleDeleteUser,
-    getAllCode:getAllCode
-   
+    handleGetAllUsers: handleGetAllUsers,
+    handleCreateNewUsers: handleCreateNewUsers,
+    handleEditUser: handleEditUser,
+    handleDeleteUser: handleDeleteUser,
+    getAllCode: getAllCode
+
 }
