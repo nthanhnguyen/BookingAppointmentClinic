@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
-import { LANGUAGES, CRUD_ACTONS } from '../../../utils';
+import { LANGUAGES, CRUD_ACTONS, CommonUtils } from '../../../utils';
 import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
@@ -87,19 +87,21 @@ class UserRedux extends Component {
                 role: arrRoles && arrRoles.length > 0? arrRoles[0].key:'',
                 position: arrPositions && arrPositions.length > 0? arrPositions[0].key:'',
                 action: CRUD_ACTONS.CREATE,
+                previewImgURL:'',
                
             })
         }
     }
 
-    handOnChangeImage = (event) => {
+    handleOnChangeImage = async (event) => {
         let data = event.target.files;
         let file = data[0];
         if (file) {
+            let base64 = await CommonUtils.getBase64(file);
             let objectUrl = URL.createObjectURL(file);
             this.setState({
                 previewImgURL: objectUrl,
-                avatar: file
+                avatar: base64
             })
         }
     }
@@ -127,7 +129,8 @@ class UserRedux extends Component {
                 phonenumber: this.state.phoneNumber,
                 gender: this.state.gender,
                 roleId: this.state.role,
-                positionId: this.state.position
+                positionId: this.state.position,
+                avatar: this.state.avatar
             })
         }
         if(action === CRUD_ACTONS.EDIT)
@@ -142,7 +145,8 @@ class UserRedux extends Component {
                 phonenumber: this.state.phoneNumber,
                 gender: this.state.gender,
                 roleId: this.state.role,
-                positionId: this.state.position
+                positionId: this.state.position,
+                avatar: this.state.avatar
             })
         }
         
@@ -165,6 +169,10 @@ class UserRedux extends Component {
 
     handleEditUserFromParentKey = (user) => {
      
+        let   imageBase64 = '';
+        if (user.image){
+            imageBase64 = new Buffer(user.image,'base64').toString('binary');
+        }
         this.setState({
             email: user.email,
             password: 'HARDCODE',
@@ -175,6 +183,7 @@ class UserRedux extends Component {
             gender: user.gender,
             position: user.position,
             avatar:'',
+            previewImgURL: imageBase64,
             role: user.role,
             action: CRUD_ACTONS.EDIT,
             userEditID: user.id
@@ -313,7 +322,7 @@ class UserRedux extends Component {
                                 <label><FormattedMessage id="manage-user.image" /></label>
                                 <div className='preview-img-container'>
                                     <input id="previewImg" type="file" hidden
-                                        onChange={(event) => this.handOnChangeImage(event)}
+                                        onChange={(event) => this.handleOnChangeImage(event)}
                                     />
 
                                     <label className="label-upload" htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
