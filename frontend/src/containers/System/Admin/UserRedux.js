@@ -7,6 +7,8 @@ import * as actions from '../../../store/actions';
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+import TableManageUser from './TableManageUser';
+
 
 class UserRedux extends Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class UserRedux extends Component {
             roleArr: [],
             previewImgURL: '',
             isOpen: false,
+
 
             email: '',
             password: '',
@@ -59,6 +62,21 @@ class UserRedux extends Component {
                 position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''
             })
         }
+
+        if (prevProps.listUsers !== this.props.listUsers) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: '',
+                position: '',
+                role: '',
+                avatar: '',
+            })
+        }
     }
 
     handOnChangeImage = (event) => {
@@ -85,7 +103,7 @@ class UserRedux extends Component {
         let isValid = this.checkValidateInput()
         if (isValid === false) return;
 
-        this.props.createNewUSer({
+        this.props.createNewUser({
             email: this.state.email,
             password: this.state.password,
             firstName: this.state.firstName,
@@ -96,7 +114,6 @@ class UserRedux extends Component {
             roleId: this.state.role,
             positionId: this.state.position
         })
-
     }
 
     checkValidateInput = () => {
@@ -259,10 +276,16 @@ class UserRedux extends Component {
                                 ><FormattedMessage id="manage-user.save" /></button>
                             </div>
 
+                            <div className="col-12 mb-5">
+                                <TableManageUser />
+                            </div>
+
                         </div>
                     </div>
 
                 </div>
+
+
 
                 {this.state.isOpen === true &&
                     <Lightbox
@@ -287,7 +310,8 @@ const mapStateToProps = state => {
         genderRedux: state.admin.genders,
         roleRedux: state.admin.roles,
         positionRedux: state.admin.positions,
-        isLoadingGender: state.admin.isLoadingGender
+        isLoadingGender: state.admin.isLoadingGender,
+        listUsers: state.admin.users
     };
 };
 
@@ -299,7 +323,9 @@ const mapDispatchToProps = dispatch => {
 
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
 
-        createNewUSer: (data) => dispatch(actions.createNewUser(data))
+        createNewUser: (data) => dispatch(actions.createNewUser(data)),
+
+        fetchUserRedux: () => dispatch(actions.fetchAllUsersStart())
     };
 };
 

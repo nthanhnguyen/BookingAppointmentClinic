@@ -140,38 +140,39 @@ class UserManage extends Component {
                     ><i className="fa fa-plus"></i> Add new users</button>
                 </div>
 
-                <div className="users-table mt-3 mx-1" ><table id="customers">
-                    <tbody>
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Actions</th>
-                        </tr>
+                <div className="users-table mt-3 mx-1" >
+                    <table id="customers">
+                        <tbody>
+                            <tr>
+                                <th>Email</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
 
-                        {arrUsers && arrUsers.map((item, index) => {
+                            {arrUsers && arrUsers.map((item, index) => {
 
-                            return (
-                                <tr key={index}>
+                                return (
+                                    <tr key={index}>
 
-                                    <td>{item.email}</td>
-                                    <td>{item.firstName}</td>
-                                    <td>{item.lastName}</td>
-                                    <td>{item.address}</td>
-                                    <td>
-                                        <button className="btn-edit" onClick={() => this.handleEditUser(item)}><i className="fas fa-pencil-alt"></i></button>
-                                        <button className="btn-delete" onClick={() => this.handleDeleteUser(item)}><i className="fas fa-trash"></i></button>
-                                    </td>
-
-
-                                </tr>
-                            )
-                        })}
-                    </tbody>
+                                        <td>{item.email}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.lastName}</td>
+                                        <td>{item.address}</td>
+                                        <td>
+                                            <button className="btn-edit" onClick={() => this.handleEditUser(item)}><i className="fas fa-pencil-alt"></i></button>
+                                            <button className="btn-delete" onClick={() => this.handleDeleteUser(item)}><i className="fas fa-trash"></i></button>
+                                        </td>
 
 
-                </table>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+
+
+                    </table>
                 </div>
 
             </div>
