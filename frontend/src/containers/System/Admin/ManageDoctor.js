@@ -30,6 +30,7 @@ class ManageDoctor extends Component {
            contentHtml:'',
            selectedOption:'',
            description:'',
+           listDoctors: []
         }
     }
 
@@ -54,17 +55,20 @@ class ManageDoctor extends Component {
         )
     }
     componentDidMount() {
-        
+        this.props.fetchAllDoctors()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        
+        if(prevProps.allDoctors !== this.props.allDoctors) {
+            this.setState({
+                listDoctors: this.props.allDoctors
+            })
+        }
     }
-
   
     render() {
       
-        
+        console.log(this.state)
         return (
             <div className='manage-doctor-container'>
             <div className='manage-doctor-title'> Taọ thêm thông tin Doctors</div>
@@ -105,14 +109,14 @@ class ManageDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        listUsers: state.admin.users
+        allDoctors: state.admin.allDoctors
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUserRedux: () => dispatch(actions.fetchAllUsersStart()),
-        deleteAUserRedux: (id) => dispatch(actions.deleteAUser(id))
+        fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
+        
     };
 };
 
