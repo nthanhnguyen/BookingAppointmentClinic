@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Slider from "react-slick";
 import * as actions from '../../../store/actions';
+import { LANGUAGES } from '../../../utils';
 
 class OutStandingDoctor extends Component {
      constructor(props) {
@@ -25,8 +26,10 @@ class OutStandingDoctor extends Component {
      }
 
      render() {
-          console.log('check topdoctor redux: ', this.props.topDoctorsRedux)
           let arrDoctors = this.state.arrDoctors;
+          let { language } = this.props;
+          arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors)
+          console.log('Care: ', arrDoctors)
           return (
                <div className='section-share section-outstanding-doctor'>
                     <div className='section-container'>
@@ -39,14 +42,22 @@ class OutStandingDoctor extends Component {
 
                                    {arrDoctors && arrDoctors.length > 0
                                         && arrDoctors.map((item, index) => {
+                                             let imageBase64  = '';
+                                             if (item.image) {
+                                                  imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                             }
+                                             let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
+                                             let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                                              return (
                                                   <div className='section-customize' key={index}>
                                                        <div className='customize-border'>
                                                             <div className='outer-bg'>
-                                                                 <div className='bg-image section-outstanding-doctor' />
+                                                                 <div className='bg-image section-outstanding-doctor' 
+                                                                      style={{ backgroundImage: `url(${imageBase64})` }}
+                                                                 />
                                                             </div>
                                                             <div className='position text-center'>
-                                                                 <div>Giáo sư, Tiến sĩ: Nguyễn Văn A</div>
+                                                                 <div>{language === LANGUAGES.VI ? nameVi : nameEn}</div>
                                                                  <div>Cơ xương khớp</div>
                                                             </div>
                                                        </div>

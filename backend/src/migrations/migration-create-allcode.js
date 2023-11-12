@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-    async up(queryInterface, Sequelize) {
+    up: async (queryInterface, Sequelize) => {
         // key: DataTypes.STRING,
         // type: DataTypes.STRING,
         // value_en: DataTypes.STRING,
