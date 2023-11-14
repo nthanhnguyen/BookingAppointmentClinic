@@ -5,12 +5,13 @@
     z-index: 1000 !important;
     height: 48px !important;
     width: 44px !important;
+
     &:hover {
         background: #d7d7d7;
     }
 }
 
-.slick-prev:before{
+.slick-prev:before {
     content: "\e257" !important;
 }
 
@@ -21,12 +22,13 @@
     z-index: 1000 !important;
     height: 48px !important;
     width: 44px !important;
+
     &:hover {
         background: #d7d7d7;
     }
 }
 
-.slick-next:before{
+.slick-next:before {
     content: "\e258" !important;
 }
 
@@ -34,34 +36,38 @@
 .slick-next::before {
     content: '\f060';
     font-family: FontAwesome !important;
-    
+
 }
 
-.section-share{
-    &.section-specialty{
+.section-share {
+    &.section-specialty {
         background: #f5f5f5;
     }
-    &.section-outstanding-doctor{
+
+    &.section-outstanding-doctor {
         background: #f5f5f5;
     }
-    &.section-about{
-        
-        height : 500px !important;
+
+    &.section-about {
+
+        height: 500px !important;
         padding: 0 100px;
-        .section-about-header{
+
+        .section-about-header {
             padding: 20px 10px;
             font-size: 22px;
             font-weight: 600;
             border-top: 1px solid #f5f5f5;
             border-bottom: 1px solid #f5f5f5;
         }
-        
+
 
     }
-    .section-body {
-        .section-customize{
 
-            .bg-image{
+    .section-body {
+        .section-customize {
+
+            .bg-image {
                 height: 180px;
                 width: 320px;
                 background-position: center center;
@@ -69,19 +75,22 @@
                 background-color: #eee;
                 background-repeat: no-repeat;
 
-                &.section-specialty{
+                &.section-specialty {
                     background-image: url(../../assets/images/suckhoetamthan.jpg);
                 }
-                &.section-medical-facility{
+
+                &.section-medical-facility {
                     background-image: url(../../assets/images/medical-facility/daihocyduoc.jpg);
                 }
-                &.section-outstanding-doctor{
+
+                &.section-outstanding-doctor {
                     // background-image: url(../../assets/images/outstanding/anhbs.jpg);
                     width: 120px;
                     height: 120px;
                     border-radius: 50%;
                 }
-                &.section-HandBook{
+
+                &.section-HandBook {
                     background-image: url(../../assets/images/HandBook/camnang.png);
                 }
             }
@@ -89,25 +98,29 @@
     }
 }
 
+.slick-disabled {
+    display: none !important;
+}
+
 .section-share {
     height: 330px;
 
-    .section-container{
+    .section-container {
         margin: 0 100px;
         display: flex;
         flex-direction: column;
 
-        .section-header{
+        .section-header {
             height: 60px;
             margin-bottom: 30px;
             padding-top: 2%;
 
-            .title-section{
+            .title-section {
                 font-size: 22px;
                 font-weight: 600;
             }
 
-            .btn-section{
+            .btn-section {
                 float: right;
                 padding: 10px 15px;
                 border: none;
@@ -118,65 +131,62 @@
                 color: black;
                 text-transform: uppercase;
 
-                &:hover{
+                &:hover {
                     color: #fff;
                     background: #f7d800;
                 }
             }
         }
 
-        
+
     }
-    
+
 }
 
-.section-outstanding-doctor{
-    .outer-bg{
+.section-outstanding-doctor {
+    .outer-bg {
         display: flex;
         justify-content: center;
         margin-bottom: 10px;
     }
 
-    .section-customize{
+    .section-customize {
         padding: 5px;
-        .customize-border{
+
+        .customize-border {
             border: 1px solid grey;
             padding: 20px;
         }
     }
-   
-    
+
+
 }
 
-.home-footer{
+.home-footer {
     text-align: center;
     padding-bottom: 50px;
-    a{text-decoration: unset;}
+
+    a {
+        text-decoration: unset;
+    }
 }
 
-.section-about-content{
+.section-about-content {
     display: flex;
     gap: 15px;
     width: 100%;
 
-    .content-left{
+    .content-left {
         width: 60%;
     }
 
-    .content-right{
+    .content-right {
         width: 40%;
 
-        p{
+        p {
             text-align: justify;
             font-style: italic;
             padding: 15px
         }
     }
 }
-
-
-
-
-
-
-

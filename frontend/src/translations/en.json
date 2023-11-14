@@ -76,7 +76,7 @@
         "role": "Role",
         "image": "Avatar",
         "save": "Save user",
-        "edit":"Edit user"
+        "edit": "Edit user"
     },
     "system": {
         "user-manage": {
@@ -104,9 +104,10 @@
                 "password": "Please fill in password"
             },
             "sure-delete-user": "Are you sure to delete this user?"
-            
         }
-       
-      
+    },
+    "homepage": {
+        "outstanding-doctor": "Last week's featured doctor",
+        "more-infor": "More infor"
     }
 }

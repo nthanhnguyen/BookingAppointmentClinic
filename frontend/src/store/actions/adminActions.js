@@ -2,7 +2,7 @@ import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService,
     getAllUsers, deleteUserService, editUserService,
-    getTopDoctorHomeService,getAllDoctors
+    getTopDoctorHomeService, getAllDoctors
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -96,6 +96,7 @@ export const createNewUser = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await createNewUserService(data);
+            //if (res) {
             if (res && res.errCode === 0) {
                 toast.success("Create a new user succeed!")
                 dispatch(saveUserSuccess());
@@ -175,7 +176,8 @@ export const editAUser = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await editUserService(data);
-            if (res && res.errCode === 0) {
+            //if (res && res.errorCode === 0) {
+            if (res) {
                 toast.success("Edit the user succeed!")
                 dispatch(editUserSuccess());
                 dispatch(fetchAllUsersStart());
@@ -238,12 +240,12 @@ export const fetchAllDoctors = () => {
                 dispatch({
                     type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
                     dataDr: res.data
-                    
+
                 })
             }
-        
+
         } catch (e) {
-           console.log('fail')
+            console.log('fail')
             dispatch({
                 type: actionTypes.FETCH_ALL_DOCTORS_FAILED
             })

@@ -26,7 +26,7 @@ class UserRedux extends Component {
             password: '',
             firstName: '',
             lastName: '',
-            phonenumber: '',
+            phonenumber: '', //đổi thành phonenumber hết cho ko nhầm lẫn
             address: '',
             gender: '',
             position: '',
@@ -78,7 +78,7 @@ class UserRedux extends Component {
                 password: '',
                 firstName: '',
                 lastName: '',
-                phoneNumber: '',
+                phonenumber: '', //đổi thành phonenumber hết cho ko nhầm lẫn
                 address: '',
                 // gender: '',
                 // position: '',
@@ -128,7 +128,7 @@ class UserRedux extends Component {
                 lastName: this.state.lastName,
                 address: this.state.address,
                 // phonenumber: this.state.phonenumber,
-                phonenumber: this.state.phoneNumber,
+                phonenumber: this.state.phonenumber, //đổi thành phonenumber hết cho ko nhầm lẫn
                 gender: this.state.gender,
                 roleId: this.state.role,
                 positionId: this.state.position,
@@ -145,7 +145,7 @@ class UserRedux extends Component {
                 lastName: this.state.lastName,
                 address: this.state.address,
                 // phonenumber: this.state.phonenumber,
-                phonenumber: this.state.phoneNumber,
+                phonenumber: this.state.phonenumber, // đổi thành phonenumber hết cho ko nhầm lẫn
                 gender: this.state.gender,
                 roleId: this.state.role,
                 positionId: this.state.position,
@@ -176,12 +176,13 @@ class UserRedux extends Component {
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
         }
+        console.log('check edit from parent: ', user)
         this.setState({
             email: user.email,
             password: 'HARDCODE',
             firstName: user.firstName,
             lastName: user.lastName,
-            phonenumber: user.phonenumber,
+            phonenumber: user.phonenumber,//đổi thành phonenumber hết cho ko nhầm lẫn
             address: user.address,
             gender: user.gender,
             role: user.roleId,
@@ -191,6 +192,8 @@ class UserRedux extends Component {
             action: CRUD_ACTONS.EDIT,
             userEditId: user.id
             //userEditID: user.id
+        }, () => {
+            console.log('check state update: ', this.setState)
         })
     }
 
@@ -271,8 +274,9 @@ class UserRedux extends Component {
                             <div className="col-3">
                                 <label><FormattedMessage id="manage-user.gender" /></label>
                                 <select id="inputState" className="form-control"
-                                    onChange={(event) => { this.onChangeInput(event, 'gender') }}
                                     value={gender}
+                                    onChange={(event) => { this.onChangeInput(event, 'gender') }}
+
                                 >
                                     {genders && genders.length > 0 &&
                                         genders.map((item, index) => {
@@ -307,8 +311,9 @@ class UserRedux extends Component {
                             <div className="col-3">
                                 <label><FormattedMessage id="manage-user.role" /></label>
                                 <select id="inputState" className="form-control"
-                                    onChange={(event) => { this.onChangeInput(event, 'role') }}
                                     value={role}
+                                    onChange={(event) => { this.onChangeInput(event, 'role') }}
+
                                 >
                                     {roles && roles.length > 0 &&
                                         roles.map((item, index) => {

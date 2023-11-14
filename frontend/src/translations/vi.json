@@ -76,7 +76,7 @@
         "role": "Vai trò",
         "image": "Ảnh đại diện",
         "save": "Lưu user",
-        "edit":"Chỉnh Sửa"
+        "edit": "Chỉnh Sửa"
     },
     "system": {
         "user-manage": {
@@ -104,9 +104,12 @@
                 "password": "Quý khách vui lòng nhập mật khẩu"
             },
             "sure-delete-user": "Bạn có chắc chắn muốn xóa người dùng này?",
-            "save":"Lưu thông tin",
-            "edit":"Chỉnh Sửa"
+            "save": "Lưu thông tin",
+            "edit": "Chỉnh Sửa"
         }
-       
+    },
+    "homepage": {
+        "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
+        "more-infor": "Xem thêm"
     }
 }

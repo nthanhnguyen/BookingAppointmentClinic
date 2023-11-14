@@ -15,14 +15,14 @@ export const CRUD_ACTONS = {
     CREATE: "CREATE",
     READ: "READ",
     EDIT: "EDIT",
-    DELETE: "DELETE"    
-}
- 
-export const manageActions = {
-    ADD: "ADD",
-    EDIT: "EDIT",
     DELETE: "DELETE"
-};
+}
+
+// export const manageActions = {
+//     ADD: "ADD",
+//     EDIT: "EDIT",
+//     DELETE: "DELETE"
+// };
 
 export const dateFormat = {
     SEND_TO_SERVER: 'DD/MM/YYYY'
