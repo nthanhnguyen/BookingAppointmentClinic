@@ -192,8 +192,6 @@ class UserRedux extends Component {
             action: CRUD_ACTONS.EDIT,
             userEditId: user.id
             //userEditID: user.id
-        }, () => {
-            console.log('check state update: ', this.setState)
         })
     }
 
