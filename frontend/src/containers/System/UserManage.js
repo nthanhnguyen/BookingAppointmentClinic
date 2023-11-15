@@ -94,6 +94,7 @@ class UserManage extends Component {
         })
     }
 
+    //////// bug chỗ này
     doEditUser = async (user) => {
         try {
             let res = await editUserService(user);

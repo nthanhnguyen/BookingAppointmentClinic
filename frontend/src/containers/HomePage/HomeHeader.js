@@ -4,13 +4,18 @@ import './HomeHeader.scss'
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from '../../utils';
 import { changeLaunguageApp } from '../../store/actions/appActions';
+import { withRouter } from 'react-router';
 
 class HomeHeader extends Component {
 
     changeLaunguage = (language) => {
         this.props.changeLaunguageAppRedux(language)
     }
-
+    returnToHome = () => {
+        if (this.props.history) {
+            this.props.history.push(`/home`)
+        }
+    }
     render() {
         let language = this.props.language;
         return (
@@ -19,7 +24,7 @@ class HomeHeader extends Component {
                     <div className='home-header-content'>
                         <div className='left-content'>
                             <i className="fas fa-bars"></i>
-                            <div className='header-logo'>
+                            <div className='header-logo' onClick={() => this.returnToHome()}>
                             </div>
                         </div>
 
@@ -49,7 +54,7 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-                {this.props.isShowBanner === true &&  <div className='home-header-banner'>
+                {this.props.isShowBanner === true && <div className='home-header-banner'>
                     <div className='content-up'>
                         <div className='title1'><FormattedMessage id="banner.title1" /></div>
                         <div className='title2'><FormattedMessage id="banner.title2" /></div>
@@ -100,7 +105,7 @@ class HomeHeader extends Component {
                     </div>
                 </div>
                 }
-               
+
             </React.Fragment>
         );
     }
@@ -121,4 +126,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

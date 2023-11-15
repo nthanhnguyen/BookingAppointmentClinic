@@ -3,14 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './ManageDoctor.scss';
 import * as actions from '../../../store/actions';
-
-
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-
 import Select from 'react-select';
 import 'react-markdown-editor-lite/lib/index.css';
-import { LANGUAGES } from '../../../utils';
+import { CRUD_ACTONS, LANGUAGES } from '../../../utils';
+import { getDetailInforDoctor } from '../../../services/userService';
+import { has } from 'markdown-it/lib/common/utils';
 
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -25,7 +24,8 @@ class ManageDoctor extends Component {
             contentHTML: '',
             selectedOption: '',
             description: '',
-            listDoctors: []
+            listDoctors: [],
+            hasOldData: false
         }
     }
 
@@ -36,16 +36,43 @@ class ManageDoctor extends Component {
         })
     }
     handleSaveContentMarkdown = () => {
-
+        let { hasOldData } = this.state;
         this.props.saveDetailDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
-            doctorId: this.state.selectedOption.value
+            doctorId: this.state.selectedOption.value,
+            action: hasOldData === true ? CRUD_ACTONS.EDIT : CRUD_ACTONS.CREATE
         })
     }
-    handleChange = selectedOption => {
+    handleChangeSelect = async (selectedOption) => {
         this.setState({ selectedOption });
+
+        let res = await getDetailInforDoctor(selectedOption.value)
+        // MarkDown lấy từ db (ko phải Markdown)
+        // Các điều kiện trong đây khác trong video, đc cutomzie lại để chạy cho đúng luồng (Nó vẫn đúng)
+        if (res && res.errCode === 0 && res.data && res.data.MarkDown
+            && res.data.MarkDown.contentHTML !== null
+            && res.data.MarkDown.contentMarkdown !== null
+            && res.data.MarkDown.description !== null) {
+            let markdown = res.data.MarkDown
+            this.setState({
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.contentMarkdown,
+                description: markdown.description,
+                hasOldData: true
+            })
+        }
+        else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                hasOldData: false
+            })
+        }
+
+        console.log('check res data: ', res)
     };
 
     handleOnChangeDesc = (event) => {
@@ -95,8 +122,7 @@ class ManageDoctor extends Component {
     }
 
     render() {
-
-        console.log('ATN chanel', this.state)
+        let { hasOldData } = this.state;
         return (
             <div className='manage-doctor-container'>
                 <div className='manage-doctor-title'> Taọ thêm thông tin Doctors</div>
@@ -107,7 +133,7 @@ class ManageDoctor extends Component {
                         <label>Chọn bác sĩ</label>
                         <Select
                             value={this.state.selectedOption}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
 
                         />
@@ -116,18 +142,31 @@ class ManageDoctor extends Component {
                         <label> Thông tin giới thiệu: </label>
                         <textarea className='form-control' rows='4'
                             onChange={(event) => this.handleOnChangeDesc(event)}
-                            value={this.state.description}>
+                            //value={this.state.description !== null ? this.state.description : ''} // Sửa tạm (khác trong video)
+                            value={this.state.description}
+                        >
                         </textarea>
                     </div>
                 </div>
 
 
                 <div className='manage-doctor-editor'>
-                    <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={this.handleEditorChange} />
+                    <MdEditor
+                        style={{ height: '500px' }}
+                        renderHTML={text => mdParser.render(text)}
+                        onChange={this.handleEditorChange}
+                        //value={this.state.contentMarkdown !== null ? this.state.contentMarkdown : ''} // Sửa tạm (khác trong video)
+                        value={this.state.contentMarkdown}
+                    />
                 </div>
                 <button
                     onClick={() => this.handleSaveContentMarkdown()}
-                    className='save-content-doctor'>Lưu thông tin</button>
+                    className={hasOldData === true ? "save-content-doctor" : "create-content-doctor"} >
+                    {hasOldData === true ?
+                        <span>Lưu thông tin</span> : <span>Tạo thông tin</span>
+                    }
+
+                </button>
             </div>
 
         )

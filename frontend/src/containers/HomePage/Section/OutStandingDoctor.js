@@ -7,7 +7,7 @@ import { LANGUAGES } from '../../../utils';
 import { withRouter } from 'react-router';
 
 class OutStandingDoctor extends Component {
-     
+
      constructor(props) {
           super(props)
           this.state = {
@@ -28,9 +28,9 @@ class OutStandingDoctor extends Component {
      }
 
      handleViewDetailDoctor = (doctor) => {
-          console.log('view infor' , doctor)
-          this.props.history.push(`/detail-doctor/${doctor.id}`)
-         
+          if (this.props.history) {
+               this.props.history.push(`/detail-doctor/${doctor.id}`)
+          }
      }
 
      render() {
@@ -63,7 +63,7 @@ class OutStandingDoctor extends Component {
                                              let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
                                              let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                                              return (
-                                                  <div className='section-customize' key={index} onClick={()=> this.handleViewDetailDoctor(item)}>
+                                                  <div className='section-customize' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
                                                        <div className='customize-border'>
                                                             <div className='outer-bg'>
                                                                  <div className='bg-image section-outstanding-doctor'
