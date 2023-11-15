@@ -177,8 +177,9 @@ export const editAUser = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await editUserService(data);
-            if (res && res.errorCode === 0) {
+            if (res && res.errCode === 0) {
                 //if (res) {
+                //console.log(res.errCode)
                 toast.success("Edit the user succeed!")
                 dispatch(editUserSuccess());
                 dispatch(fetchAllUsersStart());
