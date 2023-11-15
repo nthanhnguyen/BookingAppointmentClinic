@@ -61,6 +61,9 @@
             "clinic": "Phòng khám",
             "specialty": "Chuyên khoa",
             "handbook": "Cẩm Nang"
+        },
+        "doctor": {
+            "manage-schedule": "Quản lý kế hoạch khám bệnh"
         }
     },
     "manage-user": {
