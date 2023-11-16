@@ -131,8 +131,7 @@ class ManageShedule extends Component {
             doctorId: selectedDoctor.value,
             formatedDate: formatedDate
         })
-        console.log('test res ',res)
-        console.log('test ',result)
+    
     }
 
     render() {
