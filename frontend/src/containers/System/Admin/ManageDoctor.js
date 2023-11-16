@@ -25,7 +25,19 @@ class ManageDoctor extends Component {
             selectedOption: '',
             description: '',
             listDoctors: [],
-            hasOldData: false
+            hasOldData: false,
+            //save to doctor infor table
+            listPrice: [],
+            listPayment: [],
+            listProvinces: [],
+            selectedPrice: '',
+            selectedPayment: '',
+            selectedProvince: '',
+            nameClinic: '',
+            addressClinic: '',
+            note:''
+
+
         }
     }
 
@@ -116,6 +128,7 @@ class ManageDoctor extends Component {
         if (prevProps.language !== this.props.language) {
             let dataSelect = this.buildDataInputSelect(this.props.allDoctors)
             this.setState({
+
                 listDoctors: dataSelect
             })
         }
@@ -125,21 +138,22 @@ class ManageDoctor extends Component {
         let { hasOldData } = this.state;
         return (
             <div className='manage-doctor-container'>
-                <div className='manage-doctor-title'> Taọ thêm thông tin Doctors</div>
+                <div className='manage-doctor-title'> <FormattedMessage id={"admin.manage-doctor.title"}/></div>
 
                 <div className='more-infor'>
                     <div className='content-left from-group'>
 
-                        <label>Chọn bác sĩ</label>
+                        <label><FormattedMessage id={"admin.manage-doctor.select-doctor"}/> </label>
                         <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
+                            placeholder={'Chọn bác sĩ'}
 
                         />
                     </div>
                     <div className='content-right '>
-                        <label> Thông tin giới thiệu: </label>
+                        <label> <FormattedMessage id={"admin.manage-doctor.intro"}/> </label>
                         <textarea className='form-control' rows='4'
                             onChange={(event) => this.handleOnChangeDesc(event)}
                             //value={this.state.description !== null ? this.state.description : ''} // Sửa tạm (khác trong video)
@@ -148,7 +162,32 @@ class ManageDoctor extends Component {
                         </textarea>
                     </div>
                 </div>
-
+                <div className='more-infor-extra row'>
+                    <div className='col-4 from-group'>
+                        <label>Chọn giá</label>
+                        <input className='form-control'/>
+                    </div>
+                    <div className='col-4 from-group'>
+                        <label>Chọn Phương thức thanh toán</label>
+                        <input className='form-control'/>
+                    </div>
+                    <div className='col-4 from-group'>
+                        <label>Chọn tỉnh thành</label>
+                        <input className='form-control'/>
+                    </div>
+                    <div className='col-4 from-group'>
+                        <label>Tên Phòng Khám</label>
+                        <input className='form-control'/>
+                    </div>
+                    <div className='col-4 from-group'>
+                        <label>Địa chỉ Phòng khám</label>
+                        <input className='form-control'/>
+                    </div>
+                    <div className='col-4 from-group'>
+                        <label>Note</label>
+                        <input className='form-control'/>
+                    </div>
+                </div>
 
                 <div className='manage-doctor-editor'>
                     <MdEditor
@@ -163,7 +202,7 @@ class ManageDoctor extends Component {
                     onClick={() => this.handleSaveContentMarkdown()}
                     className={hasOldData === true ? "save-content-doctor" : "create-content-doctor"} >
                     {hasOldData === true ?
-                        <span>Lưu thông tin</span> : <span>Tạo thông tin</span>
+                        <span><FormattedMessage id={"admin.manage-doctor.add"}/></span> : <span><FormattedMessage id={"admin.manage-doctor.save"}/></span>
                     }
 
                 </button>

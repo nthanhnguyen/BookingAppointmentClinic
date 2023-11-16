@@ -128,5 +128,14 @@
             "choose": "Choose ",
             "book-free": " and book (free)"
         }
+    },
+    "admin":{
+        "manage-doctor":{
+            "title": "Add Information for doctor",
+            "select-doctor":"Select doctor",
+            "intro":"Introductory Information:",
+            "add": "Create infor",
+            "save":"Save"
+        }
     }
 }
