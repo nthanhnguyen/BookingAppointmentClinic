@@ -20,7 +20,7 @@
         "child4": "Medical tests",
         "child5": "Mental health",
         "child6": "Dental examination",
-        "placeholder": "Find a medical specialist"
+        "holder": "Find a medical specialist"
     },
     "common": {
         "add": "Add",
@@ -135,7 +135,13 @@
             "select-doctor":"Select doctor",
             "intro":"Introductory Information:",
             "add": "Create infor",
-            "save":"Save"
+            "save":"Save",
+            "price": "Medical examination price",
+            "payment": "Payment methods",
+            "province": "Province",
+            "nameClinic": "Clinic name",
+            "addressClinic": "Clinic address",
+            "note": "Note"
         }
     }
 }
