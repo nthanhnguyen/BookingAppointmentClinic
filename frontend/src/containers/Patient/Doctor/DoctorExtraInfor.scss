@@ -19,19 +19,26 @@
             font-weight: 600;
             color: #333;
         }
+    }
 
-    .content-down {
+    .content-down{
 
         .short-infor {
-            span {
+            .detail {
                 cursor: pointer;
                 color: rgb(38, 160, 231);
             }
 
+            .currency{
+                margin : 0 5px;
+            }
+
+      
+        }
         .title-price {
             margin-bottom: 10px;
-        }
 
+        }
         .detail-infor {
             border: 1px solid #ddd;
             padding: 5px;
@@ -47,14 +54,12 @@
 
             .note {}
         }
-
         .payment {
             border: 1px solid #ddd;
             padding: 5px;
             background-color: #eee;
         }
-
-        .hide-price {
+        .hide-price{
             margin-top: 10px;
 
             span {
@@ -62,7 +67,6 @@
                 color: rgb(38, 160, 231);
             }
         }
-        }
     }    
-    }
+    
 }

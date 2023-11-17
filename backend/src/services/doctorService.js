@@ -93,7 +93,7 @@ let saveDetailInforDoctor = (inputData) => {
                     }
                 }
 
-                   //upsert to Doctor_infor table
+                   //upsert to Doctor_Infor table
                    let doctorInfor = await db.Doctor_Infor.findOne({
                     where: {
                         doctorId: inputData.doctorId,
@@ -266,11 +266,47 @@ let getScheduleByDate =(doctorId,date) => {
         }catch (e){}
     })
 }
+let getExtraInforDoctorById =(idInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(!idInput){
+                resolve({
+                    errCode : 1,
+                    errMessage: "Missing required parameter"
+                });
+            }else{
+                let data = await db.Doctor_Infor.findOne({
+                        where:{doctorId: idInput},
+                        attributes: {
+                            exclude: ['id', 'doctorId']
+                        },
+                        include: [
+                            {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi']},
+                            {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi']},
+                            {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi']},
+                        ],
+                        raw: true,
+                        nest: true
+                })
+
+                if(!data) data = {};
+                resolve({
+                    errCode : 0,
+                    data: data,
+                });
+            }
+                
+        }catch (e) {
+
+        }
+    })
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
     saveDetailInforDoctor: saveDetailInforDoctor,
     getDetailDoctorById: getDetailDoctorById,
     bulkCreateSchedule: bulkCreateSchedule,
-    getScheduleByDate: getScheduleByDate
+    getScheduleByDate: getScheduleByDate,
+    getExtraInforDoctorById: getExtraInforDoctorById,
 }
