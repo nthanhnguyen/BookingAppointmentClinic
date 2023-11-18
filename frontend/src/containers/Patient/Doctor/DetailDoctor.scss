@@ -10,8 +10,10 @@
 
 
         .content-left {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             width: 20%;
-            background: center center no-repeat;
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -37,19 +39,21 @@
         }
     }
 
-    .schedule-doctor{
+    .schedule-doctor {
         margin: 0 100px;
-        display:flex;
+        display: flex;
         padding: 10px 0;
         min-height: 200px;
-        
-        .content-left{
+
+        .content-left {
             width: 50%;
         }
-        .content-right{
+
+        .content-right {
             width: 50%;
         }
     }
+
     .detail-infor-doctor {
 
         border-top: 1px solid #ddd;
