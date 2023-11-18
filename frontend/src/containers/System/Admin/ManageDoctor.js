@@ -30,7 +30,7 @@ class ManageDoctor extends Component {
             listPrice: [],
             listPayment: [],
             listProvince: [],
-            selectedPrice: '',
+            selectedPrice: '', ///
             selectedPayment: '',
             selectedProvince: '',
             nameClinic: '',
@@ -196,7 +196,7 @@ class ManageDoctor extends Component {
         if (prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor){
             let {resPrice, resPayment, resProvince} =  this.props.allRequiredDoctorInfor;
 
-            let dataSelectPrice = this.buildDataInputSelect(resPrice, 'PRICE');
+            let dataSelectPrice = this.buildDataInputSelect(resPrice, 'PRICE'); /////////////////
             let dataSelectPayment = this.buildDataInputSelect(resPayment, 'PAYMENT');
             let dataSelectProvince = this.buildDataInputSelect(resProvince, 'PROVINCE');
 
