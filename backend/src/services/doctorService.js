@@ -1,7 +1,7 @@
 import db from "../models/index";
 require('dotenv').config();
 import _ from 'lodash';
-const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE 
+const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE
 let getTopDoctorHome = (limitInput) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -56,10 +56,10 @@ let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!inputData.doctorId || !inputData.contentHTML
-                || !inputData.contentMarkdown 
-                || !inputData.action || !inputData.selectedPrice 
-                || !inputData.selectedPayment || !inputData.selectedProvince 
-                || !inputData.nameClinic || !inputData.addressClinic 
+                || !inputData.contentMarkdown
+                || !inputData.action || !inputData.selectedPrice
+                || !inputData.selectedPayment || !inputData.selectedProvince
+                || !inputData.nameClinic || !inputData.addressClinic
                 || !inputData.note) {
                 resolve({
                     errCode: 1,
@@ -76,7 +76,7 @@ let saveDetailInforDoctor = (inputData) => {
                         doctorId: inputData.doctorId
                     })
 
-             
+
 
                 } else if (inputData.action === 'EDIT') {
                     let doctorMarkdown = await db.MarkDown.findOne({
@@ -93,12 +93,12 @@ let saveDetailInforDoctor = (inputData) => {
                     }
                 }
 
-                   //upsert to Doctor_Infor table
-                   let doctorInfor = await db.Doctor_Infor.findOne({
+                //upsert to Doctor_Infor table
+                let doctorInfor = await db.Doctor_Infor.findOne({
                     where: {
                         doctorId: inputData.doctorId,
                     },
-                    raw : false
+                    raw: false
                 })
                 if (doctorInfor) {
                     //update
@@ -113,13 +113,13 @@ let saveDetailInforDoctor = (inputData) => {
                 } else {
                     //create
                     await db.Doctor_Infor.create({
-                    doctorId: inputData.doctorId,
-                    priceId : inputData.selectedPrice,
-                    provinceId : inputData.selectedProvince,
-                    paymentId : inputData.selectedPayment,
-                    nameClinic : inputData.nameClinic,
-                    addressClinic : inputData.addressClinic,
-                    note : inputData.note,
+                        doctorId: inputData.doctorId,
+                        priceId: inputData.selectedPrice,
+                        provinceId: inputData.selectedProvince,
+                        paymentId: inputData.selectedPayment,
+                        nameClinic: inputData.nameClinic,
+                        addressClinic: inputData.addressClinic,
+                        note: inputData.note,
                     })
                 }
                 resolve({
@@ -161,9 +161,9 @@ let getDetailDoctorById = (inputId) => {
                                 exclude: ['id', 'doctorId']
                             },
                             include: [
-                                {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi']},
-                                {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi']},
-                                {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi']},
+                                { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                                { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
                             ]
                         },
 
@@ -188,115 +188,115 @@ let getDetailDoctorById = (inputId) => {
     })
 
 }
-let bulkCreateSchedule = (data)  => {
+let bulkCreateSchedule = (data) => {
     return new Promise(async (resolve, reject) => {
-        try{
-            if(!data.arrSchedule || !data.doctorId || !data.formatedDate){
+        try {
+            if (!data.arrSchedule || !data.doctorId || !data.formatedDate) {
                 resolve({
                     errCode: 1,
-                    errMessage:'Missing required parameters'
+                    errMessage: 'Missing required parameters'
                 })
-            }else {
+            } else {
                 let schedule = data.arrSchedule;
-                if(schedule && schedule.length > 0){
-                    schedule = schedule.map(item =>{
+                if (schedule && schedule.length > 0) {
+                    schedule = schedule.map(item => {
                         item.maxNumber = MAX_NUMBER_SCHEDULE;
                         return item;
                     })
                 }
 
                 let existing = await db.Schedule.findAll({
-                    where :{
-                        doctorId : data.doctorId, date: data.formatedDate
+                    where: {
+                        doctorId: data.doctorId, date: data.formatedDate
                     },
-                    attributes :['timeType','date','doctorId','maxNumber'],
+                    attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
                     raw: true
                 });
 
-               
+
                 //compare differenr of time
-                let toCreate = _.differenceWith(schedule, existing,(a, b)=>{
+                let toCreate = _.differenceWith(schedule, existing, (a, b) => {
                     return a.timeType === b.timeType && +a.date === +b.date;
                 });
-                
+
                 //create data
-                if (toCreate && toCreate.length>0) {
+                if (toCreate && toCreate.length > 0) {
                     await db.Schedule.bulkCreate(toCreate);
                 }
 
                 resolve({
-                    errCode : 0,
-                    errMessage :'OK'
+                    errCode: 0,
+                    errMessage: 'OK'
                 })
             }
-            
-        }catch (e){
+
+        } catch (e) {
             reject(e);
         }
     })
 }
-let getScheduleByDate =(doctorId,date) => {
-    return new Promise (async(resolve, reject) => {
-        try{
-            if(!doctorId || !date){
+let getScheduleByDate = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
                 resolve({
-                    errCode : 1,
+                    errCode: 1,
                     errMessage: "Missing required parameter"
                 });
-            }else{
+            } else {
                 let dataSchedule = await db.Schedule.findAll({
-                    where:{
-                        doctorId:doctorId,
+                    where: {
+                        doctorId: doctorId,
                         date: date
                     }, include: [
-                       
+
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] }
                     ],
                     raw: true,
                     nest: true
                 })
-                if(!dataSchedule ) dataSchedule  = [];
+                if (!dataSchedule) dataSchedule = [];
                 resolve({
                     errCode: 0,
-                    data: dataSchedule 
+                    data: dataSchedule
                 });
             }
-                
-                
-        }catch (e){}
+
+
+        } catch (e) { }
     })
 }
-let getExtraInforDoctorById =(idInput) => {
+let getExtraInforDoctorById = (idInput) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if(!idInput){
+            if (!idInput) {
                 resolve({
-                    errCode : 1,
+                    errCode: 1,
                     errMessage: "Missing required parameter"
                 });
-            }else{
+            } else {
                 let data = await db.Doctor_Infor.findOne({
-                        where:{doctorId: idInput},
-                        attributes: {
-                            exclude: ['id', 'doctorId']
-                        },
-                        include: [
-                            {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi']},
-                            {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi']},
-                            {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi']},
-                        ],
-                        raw: true,
-                        nest: true
+                    where: { doctorId: idInput },
+                    attributes: {
+                        exclude: ['id', 'doctorId']
+                    },
+                    include: [
+                        { model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVi'] },
+                        { model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: true,
+                    nest: true
                 })
 
-                if(!data) data = {};
+                if (!data) data = {};
                 resolve({
-                    errCode : 0,
+                    errCode: 0,
                     data: data,
                 });
             }
-                
-        }catch (e) {
+
+        } catch (e) {
 
         }
     })
