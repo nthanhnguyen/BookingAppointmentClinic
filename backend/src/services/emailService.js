@@ -43,11 +43,11 @@ let getBodyHTMLEmail = (dataSend) => {
     ` // html body`
   }
   if (dataSend.language === 'en'){
-    result = `<h3> Xin Chào ${dataSend.patientName}! </h3>
-    <p> Bạn nhận được email này vì đã đặt lịch khám bệnh online trên Care4u</p>
-    <p> Thông tin đặt lệnh khám bệnh:</p>
-    <div><b>Thời gian ${dataSend.time}</b></div>
-    <div><b>Bác Sĩ ${dataSend.doctorName}</b></div>
+    result = `<h3> HeLLo ${dataSend.patientName}! </h3>
+    <p> You received this email because you made an online medical appointment on Care4u</p>
+    <p> Information on ordering medical examination:</p>
+    <div><b>Time ${dataSend.time}</b></div>
+    <div><b>Doctor${dataSend.doctorName}</b></div>
 
     <p>Nếu các thông tin trên là đúng sự thật, vui lòng click vào đường link bên dưới để xác nhận và hoàn tất thủ tục đặt lịch khám bệnh</p>
     <div> 
