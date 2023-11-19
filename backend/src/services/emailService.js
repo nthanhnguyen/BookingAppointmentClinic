@@ -49,12 +49,12 @@ let getBodyHTMLEmail = (dataSend) => {
     <div><b>Time ${dataSend.time}</b></div>
     <div><b>Doctor${dataSend.doctorName}</b></div>
 
-    <p>Nếu các thông tin trên là đúng sự thật, vui lòng click vào đường link bên dưới để xác nhận và hoàn tất thủ tục đặt lịch khám bệnh</p>
+    <p> If the above information is true, please click on the link below to confirm and complete the medical appointment procedure.</p>
     <div> 
       <a href =${dataSend.redirectLink} target = "_blank">Click here</a>
     </div>
 
-    <div> Xin chân thành cảm ơn </div>
+    <div> Sincerely thank </div>
     ` // html body`
   }
   return result;
