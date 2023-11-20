@@ -2,6 +2,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "uuid": "^9.0.1"
   }
 }
