@@ -55,6 +55,9 @@ const getProfileDoctorById = (doctorId) => {
 const postPatientBookAppointment = (data) => {
     return axios.post('/api/patient-book-appointment', data)
 }
+const postVerifyBookAppointment = (data) => {
+    return axios.post('/api/verify-book-appointment', data)
+}
 export {
     handleLoginApi, getAllUsers,
     createNewUserService, deleteUserService,
@@ -62,5 +65,6 @@ export {
     getAllDoctors, saveDetailDoctorService,
     getDetailInforDoctor, saveDBulkScheduleDoctor,
     getScheduleDoctorByDate, getExtraInforDoctorById,
-    getProfileDoctorById,postPatientBookAppointment
+    getProfileDoctorById, postPatientBookAppointment,
+    postVerifyBookAppointment
 };
