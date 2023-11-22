@@ -145,7 +145,7 @@
             "btnConfirm": "Confirm",
             "btnCancel": "Cancel",
             "priceBooking": "Free bookings",
-            "price": "Price"
+            "price": "Price: "
         }
     },
     "admin": {
