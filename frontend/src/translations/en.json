@@ -132,19 +132,20 @@
             "detail": "More detail",
             "payment": "Patients can pay costs by method:",
             "hide-price": "Hide"
-        }, "booking-modal" : {
-            "title" : "Information to book a medical appointment",
-            "fullname" : "Fullname",
+        },
+        "booking-modal": {
+            "title": "Information to book a medical appointment",
+            "fullname": "Fullname",
             "phoneNumber": "Phone Number",
-            "email" : "Email",
-            "address" : "Address",
+            "email": "Email",
+            "address": "Address",
             "reason": "Reason for medical examination",
-            "birthday" : "Date of birth",
-            "gender" : "Gender",
-            "btnConfirm" : "Confirm",
-            "btnCancel" : "Cancel",
-            "priceBooking" : "Free bookings",
-            "price": "Price" 
+            "birthday": "Date of birth",
+            "gender": "Gender",
+            "btnConfirm": "Confirm",
+            "btnCancel": "Cancel",
+            "priceBooking": "Free bookings",
+            "price": "Price"
         }
     },
     "admin": {
@@ -159,7 +160,9 @@
             "province": "Province",
             "nameClinic": "Clinic name",
             "addressClinic": "Clinic address",
-            "note": "Note"
+            "note": "Note",
+            "specialty": "Specialty",
+            "select-clinic": "Clinic"
         }
     }
 }

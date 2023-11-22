@@ -196,6 +196,7 @@ let createNewUser = (data) => {
         }
     })
 }
+
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         let foundUser = await db.User.findOne({
@@ -204,7 +205,7 @@ let deleteUser = (userId) => {
         if (!foundUser) {
             resolve({
                 errCode: 2,
-                errMessage: `the user isn't exist`
+                errMessage: `The user isn't exist`
             })
         }
 
@@ -218,6 +219,7 @@ let deleteUser = (userId) => {
         })
     })
 }
+
 let getAllCodeService = (typeInput) => {
     return new Promise(async (resolve, reject) => {
         try {
