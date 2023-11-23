@@ -29,6 +29,13 @@ class DoctorSchedule extends Component {
         this.setState({
             allDays: allDays,
         })
+        if(this.props.doctorIdFromParent){
+            let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent, allDays[0].value);
+            this.setState({
+                allAvalabelTime: res.data ? res.data : []
+            })
+        }
+       
     }
     capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
