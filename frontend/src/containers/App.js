@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 import { path } from '../utils';
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
+import DetailClinic from './Patient/Clinic/DetailClinic';
+
 
 import Home from '../routes/Home';
 // import Login from '../routes/Login';
@@ -60,6 +62,7 @@ class App extends Component {
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
+                                    <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
 
