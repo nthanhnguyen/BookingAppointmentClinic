@@ -1,3 +1,32 @@
+#patients {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#patients td,
+#patients th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#patients tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#patients tr:hover {
+    background-color: #ddd;
+}
+
+#patients th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+
 div._loading_overlay_wrapper {
     position: unset;
 
@@ -8,10 +37,12 @@ div._loading_overlay_wrapper {
 
 .manage-patient-container {
     .m-p-title {
-        font-size: 15px;
-        margin: 10px 0;
-        text-align: center;
         text-transform: uppercase;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 17px;
+        text-align: center;
     }
 
     .manage-patient-body {

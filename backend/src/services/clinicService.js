@@ -19,7 +19,7 @@ let createClinic = (data) => {
             } else {
                 await db.Clinic.create({
                     name: data.name,
-                    address:data.address,
+                    address: data.address,
                     image: data.imageBase64,
                     descriptionHTML: data.descriptionHTML,
                     descriptionMarkdown: data.descriptionMarkdown
@@ -56,10 +56,10 @@ let getAllClinic = () => {
         }
     })
 }
-let getDetailClinicById  = (inputId) => {
+let getDetailClinicById = (inputId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputId ) {
+            if (!inputId) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing parameter'
@@ -70,20 +70,20 @@ let getDetailClinicById  = (inputId) => {
                     where: {
                         id: inputId
                     },
-                    attributes: ['name','address','descriptionHTML', 'descriptionMarkdown']
+                    attributes: ['name', 'address', 'descriptionHTML', 'descriptionMarkdown']
                 })
                 if (data) {
                     let doctorClinic = [];
-                    
-                        doctorClinic = await db.Doctor_Infor.findAll({
-                            where: { ClinicId: inputId },
-                            attributes: ['doctorId', 'provinceId']
-                        })
-                        data.doctorClinic = doctorClinic;
-                    }else data = {}
 
-                   
-              
+                    doctorClinic = await db.Doctor_Infor.findAll({
+                        where: { ClinicId: inputId },
+                        attributes: ['doctorId', 'provinceId']
+                    })
+                    data.doctorClinic = doctorClinic;
+                } else data = {}
+
+
+
                 resolve({
                     errMessage: 'OK',
                     errCode: 0,
@@ -97,7 +97,7 @@ let getDetailClinicById  = (inputId) => {
 }
 
 
-module.exports ={
+module.exports = {
     createClinic: createClinic,
     getAllClinic: getAllClinic,
     getDetailClinicById: getDetailClinicById,

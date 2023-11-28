@@ -133,7 +133,7 @@ class ManagePatient extends Component {
                                 />
                             </div>
                             <div className='col-12 table-manage-patient'>
-                                <table style={{ width: '100%' }}>
+                                <table id="patients" style={{ width: '100%' }}>
                                     <tbody>
                                         <tr>
                                             <th>STT</th>
