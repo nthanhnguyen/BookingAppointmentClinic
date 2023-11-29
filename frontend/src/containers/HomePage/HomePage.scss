@@ -1,7 +1,9 @@
+
+
 .slick-prev {
     left: -10px !important;
     border: 2px solid #d7d7d7 !important;
-    background: #fff !important;
+    background: #49bce2 !important;
     z-index: 1000 !important;
     height: 48px !important;
     width: 44px !important;
@@ -11,14 +13,15 @@
     }
 }
 
-.slick-prev:before {
-    content: "\e257" !important;
-}
+// .slick-prev::before {
+//     content: '<';
+//     color: black;
+// }
 
 .slick-next {
     right: -10px !important;
     border: 2px solid #d7d7d7 !important;
-    background: #fff !important;
+    background: #49bce2 !important;
     z-index: 1000 !important;
     height: 48px !important;
     width: 44px !important;
@@ -28,16 +31,24 @@
     }
 }
 
-.slick-next:before {
-    content: "\e258" !important;
-}
+// .slick-next::before {
+//     // font-family: "Font Awesome 5 Free" !important;
+//     // content: "\f104" !important;
+//     // font-weight: 900;
+// }
 
-.slick-prev:before,
-.slick-next::before {
-    content: '\f060';
-    font-family: FontAwesome !important;
+// .slick-prev:before,
+// .slick-next::before {
+//     font-family: 'slick';
+//     font-size: 20px;
+//     line-height: 1;
 
-}
+//     opacity: .75;
+//     color: black;
+
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+// }
 
 .section-share {
     &.section-specialty {
@@ -75,13 +86,13 @@
                 background-color: #eee;
                 background-repeat: no-repeat;
 
-                &.section-specialty {
-                    //background-image: url(../../assets/images/suckhoetamthan.jpg);
-                }
+                // &.section-specialty {
+                //     //background-image: url(../../assets/images/suckhoetamthan.jpg);
+                // }
 
-                &.section-medical-facility {
-                    // background-image: url(../../assets/images/medical-facility/daihocyduoc.jpg);
-                }
+                // &.section-medical-facility {
+                //     // background-image: url(../../assets/images/medical-facility/daihocyduoc.jpg);
+                // }
 
                 &.section-outstanding-doctor {
                     // background-image: url(../../assets/images/outstanding/anhbs.jpg);
