@@ -7,24 +7,24 @@ import Slider from "react-slick";
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "red" }}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "red" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "green" }}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "green" }}
+            onClick={onClick}
+        />
     );
-  }
+}
 
 class About extends Component {
 
@@ -32,23 +32,21 @@ class About extends Component {
         return (
             <div className='section-share section-about'>
                 <div className='section-about-header'>
-                    1 cái title cho 1 cái video nào đó 
+                    Tầm quan trọng của khám sức khỏe
                 </div>
                 <div className='section-about-content'>
                     <div className='content-left'>
-                        <iframe width ="90%"  height ="400"
-                            src="https://www.youtube.com/embed/4CCGI83vOVo" title="Jack | Đom Đóm | Official Music Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-                        </iframe>
+                        <iframe width="90%" height="400" src="https://www.youtube.com/embed/JyfyBfgJoho" title="Tầm quan trọng của khám sức khỏe tổng quát định kỳ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                     <div className='content-right'>
                         <p>
-                            Chỗ này có ý tưởng giới thiệu hay video gì đó bỏ zô
+                            Tầm quan trọng của khám sức khỏe
                         </p>
 
-                     </div>
+                    </div>
                 </div>
 
-              
+
             </div>
         );
     }

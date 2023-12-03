@@ -18,11 +18,21 @@ module.exports = {
             doctorId: {
                 type: Sequelize.INTEGER
             },
-            description: {
+            date: {
+                type: Sequelize.STRING
+            },
+            timeType: {
+                type: Sequelize.STRING
+            },
+            descriptionHTML: {
+                type: Sequelize.TEXT
+            },
+
+            descriptionMarkdown: {
                 type: Sequelize.TEXT
             },
             files: {
-                type: Sequelize.TEXT
+                type: Sequelize.BLOB('long')
             },
 
             createdAt: {

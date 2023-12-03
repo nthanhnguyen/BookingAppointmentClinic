@@ -72,7 +72,7 @@ let getBodyHTMLEmailRemedy = (dataSend) => {
     ` // html body`
   }
   if (dataSend.language === 'en') {
-    result = `<h3> Deat ${dataSend.patientName}! </h3>
+    result = `<h3> Dear ${dataSend.patientName}! </h3>
     <p> You received this email because you made an online medical appointment on Care4u</p>
     <p>bla bla</p>
     <div> Sincerely thank </div>

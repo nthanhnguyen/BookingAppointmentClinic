@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import './ManagePatient.scss';
+import './ManageHistory.scss';
 import { LANGUAGES } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
-import DatePicker from '../../../components/Input/DatePicker';
-import { getAllPatientForDoctor, postSendRemedy } from '../../../services/userService';
-import moment from 'moment';
-import RemedyModal from './RemedyModal';
-import { toast } from 'react-toastify';
 import LoadingOverlay from 'react-loading-overlay';
+import { getAllHistoriesForDoctor } from '../../../services/userService';
+import moment from 'moment';
+import DatePicker from '../../../components/Input/DatePicker';
 
-class ManagePatient extends Component {
+class ManageHistory extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             currentDate: moment(new Date()).startOf('day').valueOf(),
-            dataPatient: [],
-            isOpenRemedyModal: false,
-            dataModal: {},
-            isShowLoading: false
+            dataHistories: [],
+            //isOpenDesHistoryModal: false
+            //dataModal: {},
+            //isShowLoading: false
         }
     }
 
-    async componentDidMount() {
-
-        this.getDataPatient()
-    }
-
-    getDataPatient = async () => {
+    getDataHistories = async () => {
         let { user } = this.props;
         let { currentDate } = this.state;
         let formatedDate = new Date(currentDate).getTime();
 
-        let res = await getAllPatientForDoctor({
-            doctorId: user.id,
+        let res = await getAllHistoriesForDoctor({
+            doctorID: user.id,
             date: formatedDate
         })
         if (res && res.errCode === 0) {
             this.setState({
-                dataPatient: res.data
+                dataHistories: res.data
             })
         }
+    }
+
+    async componentDidMount() {
+        this.getDataHistories()
     }
 
 
@@ -55,69 +52,32 @@ class ManagePatient extends Component {
         this.setState({
             currentDate: date[0]
         }, async () => {
-            await this.getDataPatient()
-        })
-    }
-    handleBtnConfirm = (item) => {
-        let data = {
-            doctorId: item.doctorId,
-            patientId: item.patientId,
-            email: item.patientData.email,
-            timeType: item.timeType,
-            patientName: item.patientData.firstName
-        }
-        this.setState({
-            isOpenRemedyModal: true,
-            dataModal: data
+            await this.getDataHistories()
         })
     }
 
-    closeRemedyModal = () => {
-        this.setState({
-            isOpenRemedyModal: false,
-            dataModal: {}
-        })
+    handleBtnDetail = (item) => {
+        // let data = {
+        //     descriptionHTML: item.descriptionHTML
+        // }
+        // this.setState({
+        //     isOpenDesHistoryModal: true,
+        //     dataModal: data
+        // })
+        alert('Yes')
     }
 
-    sendRemedy = async (dataChild) => {
-        let { dataModal } = this.state;
-
-        let { currentDate } = this.state;
-        let formatedDate = new Date(currentDate).getTime();
-        this.setState({
-            isShowLoading: true
-        })
-        let res = await postSendRemedy({
-            email: dataChild.email,
-            imgBase64: dataChild.imgBase64,
-            descriptionHTML: dataChild.descriptionHTML,
-            descriptionMarkdown: dataChild.descriptionMarkdown,
-            doctorId: dataModal.doctorId,
-            patientId: dataModal.patientId,
-            timeType: dataModal.timeType,
-            language: this.props.language,
-            patientName: dataModal.patientName,
-            date: formatedDate
-        })
-        if (res && res.errCode === 0) {
-            this.setState({
-                isShowLoading: false
-            })
-            toast.success('Send Remedy succeed: ');
-            this.closeRemedyModal();
-            await this.getDataPatient();
-        } else {
-            this.setState({
-                isShowLoading: false
-            })
-            toast.error('Something wrongs...');
-            console.log('error send remedy: ', res)
-        }
-    }
+    // closeDetailModal = () => {
+    //     this.setState({
+    //         isOpenDesHistoryModal: false,
+    //         //dataModal: {}
+    //     })
+    // }
 
     render() {
-        let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
+        let { dataHistories } = this.state;
         let { language } = this.props
+        console.log('check dataHistories', this.state)
         return (
             <>
                 <LoadingOverlay
@@ -127,7 +87,7 @@ class ManagePatient extends Component {
                 >
                     <div className='manage-patient-container'>
                         <div className='m-p-title'>
-                            Quản lý bệnh nhân khám bệnh
+                            Quản lý lịch sử khám bệnh của bệnh nhân
                         </div>
                         <div className='manage-patient-body row'>
                             <div className='col-4 form-group'>
@@ -145,11 +105,12 @@ class ManagePatient extends Component {
                                             <th>STT</th>
                                             <th>Thời gian</th>
                                             <th>Họ và tên</th>
-                                            <th>Địa chỉ</th>
                                             <th>Giới tính</th>
-                                            <th>Actions</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Mô tả thông tin bệnh</th>
+                                            <th>File</th>
                                         </tr>
-                                        {dataPatient && dataPatient.length > 0 && dataPatient.map((item, index) => {
+                                        {dataHistories && dataHistories.length > 0 && dataHistories.map((item, index) => {
                                             let time = language === LANGUAGES.VI ?
                                                 item.timeTypeDataPatient.valueVi : item.timeTypeDataPatient.valueEn;
                                             let gender = language === LANGUAGES.VI ?
@@ -159,15 +120,15 @@ class ManagePatient extends Component {
                                                     <td>{index + 1}</td>
                                                     <td>{time}</td>
                                                     <td>{item.patientData.firstName}</td>
-                                                    <td>{item.patientData.address}</td>
                                                     <td>{gender}</td>
-                                                    {/* <td>{item.patientData.genderData.valueVi}</td> */}
+                                                    <td>{item.patientData.address}</td>
                                                     <td>
                                                         <button className='mp-btn-confirm'
-                                                            onClick={() => this.handleBtnConfirm(item)}>Xác nhận
+                                                            onClick={() => this.handleBtnDetail(item)}>Xem chi tiết
                                                         </button>
 
                                                     </td>
+                                                    <td>{item.patientData.files}</td>
                                                 </tr>
                                             )
                                         })
@@ -177,18 +138,15 @@ class ManagePatient extends Component {
                                             // </tr>
 
                                         }
+
+
                                     </tbody>
                                 </table>
 
                             </div>
                         </div>
                     </div>
-                    <RemedyModal
-                        isOpenModal={isOpenRemedyModal}
-                        dataModal={dataModal}
-                        closeRemedyModal={this.closeRemedyModal}
-                        sendRemedy={this.sendRemedy}
-                    />
+
                 </LoadingOverlay>
             </>
         )
@@ -198,8 +156,8 @@ class ManagePatient extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language,
         user: state.user.userInfo,
+        language: state.app.language,
     };
 };
 
@@ -208,4 +166,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManagePatient);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageHistory);

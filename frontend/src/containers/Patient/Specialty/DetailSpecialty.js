@@ -44,21 +44,21 @@ class DetailSpecialty extends Component {
                     }
                 }
                 let dataProvince = resProvince.data;
-                
-                if(dataProvince && dataProvince.length > 0) {
+
+                if (dataProvince && dataProvince.length > 0) {
                     dataProvince.unshift({
-                        createdAt:null,
+                        createdAt: null,
                         keyMap: "ALL",
                         type: "PROVINCE",
                         valueEn: "ALL",
                         valueVi: "Toàn Quốc",
-                        
+
                     })
                 }
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
-                    listProvince: dataProvince  
+                    listProvince: dataProvince
                 })
             }
         }
@@ -67,14 +67,14 @@ class DetailSpecialty extends Component {
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
-           
+
         }
         if (this.props.doctorId !== prevProps.doctorId) {
             let data = await this.getInforDoctor(this.props.doctorId);
             this.setState({
-              dataProfile: data,
+                dataProfile: data,
             });
-          }
+        }
     }
 
     handleOnChangeSelect = async (event) => {
@@ -86,9 +86,9 @@ class DetailSpecialty extends Component {
                 location: location
             });
 
-      
 
-            if (res && res.errCode === 0 ) {
+
+            if (res && res.errCode === 0) {
                 let data = res.data;
                 let arrDoctorId = [];
                 if (data && !_.isEmpty(res.data)) {
@@ -99,14 +99,15 @@ class DetailSpecialty extends Component {
                         })
                     }
                 }
-              
+
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
-                  
+
                 })
             }
-    }}
+        }
+    }
 
     render() {
         let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
@@ -149,8 +150,8 @@ class DetailSpecialty extends Component {
                                             <ProfileDoctor
                                                 doctorId={item}
                                                 isShowDescriptionDoctor={true}
-                                                isShowLinkDetail = {true}
-                                                isShowPrice = {false}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={false}
                                             //dataTime={dataTime}
                                             />
                                         </div>

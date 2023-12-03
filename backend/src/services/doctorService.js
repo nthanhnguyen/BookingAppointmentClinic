@@ -454,9 +454,59 @@ let sendRemedy = (data) => {
 
                 await emailService.sendAttachment(data);
 
+                await db.History.create({
+                    patientID: data.patientId,
+                    doctorID: data.doctorId,
+                    files: data.imgBase64,
+                    descriptionHTML: data.descriptionHTML,
+                    descriptionMarkdown: data.descriptionMarkdown,
+                    date: data.date,
+                    timeType: data.timeType
+                })
+
                 resolve({
                     errCode: 0,
                     errMessage: 'OK'
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getAllHistoriesForDoctor = (doctorID, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorID || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameter',
+                })
+            } else {
+                let data = await db.History.findAll({
+                    where: {
+                        doctorID: doctorID,
+                        date: date
+                    },
+                    include: [
+                        {
+                            model: db.User, as: 'patientData',
+                            attributes: ['email', 'firstName', 'address', 'gender'],
+                            include: [
+                                { model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi'] },
+                            ]
+                        },
+                        {
+                            model: db.Allcode, as: 'timeTypeDataPatient', attributes: ['valueEn', 'valueVi']
+                        }
+                    ],
+                    raw: false,//
+                    nest: true
+                })
+                resolve({
+                    errCode: 0,
+                    data: data
                 })
             }
         } catch (e) {
@@ -475,5 +525,6 @@ module.exports = {
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById: getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
-    sendRemedy: sendRemedy
+    sendRemedy: sendRemedy,
+    getAllHistoriesForDoctor: getAllHistoriesForDoctor
 }

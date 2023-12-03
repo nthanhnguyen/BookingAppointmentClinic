@@ -6,13 +6,20 @@ import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { CommonUtils } from '../../../utils';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
 class RemedyModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            imgBase64: ''
+            imgBase64: '',
+            descriptionHTML: '',
+            descriptionMarkdown: ''
         }
     }
 
@@ -51,6 +58,14 @@ class RemedyModal extends Component {
 
     handleSendRemedy = () => {
         this.props.sendRemedy(this.state)
+        console.log('Check pros Send: ', this.state)
+    }
+
+    handleEditorChange = ({ html, text }) => {
+        this.setState({
+            descriptionHTML: html,
+            descriptionMarkdown: text
+        })
     }
 
     render() {
@@ -85,7 +100,14 @@ class RemedyModal extends Component {
                                 onChange={(event) => this.handleOnChangeImage(event)}
                             />
                         </div>
-
+                        <div className='col-12 form-group'>
+                            <MdEditor
+                                style={{ height: '300px' }}
+                                renderHTML={text => mdParser.render(text)}
+                                onChange={this.handleEditorChange}
+                                value={this.state.descriptionMarkdown}
+                            />
+                        </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>
