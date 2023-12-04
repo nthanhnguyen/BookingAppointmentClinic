@@ -7,6 +7,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import { getAllHistoriesForDoctor } from '../../../services/userService';
 import moment from 'moment';
 import DatePicker from '../../../components/Input/DatePicker';
+import DetailDesModal from './DetailDesModal';
 
 class ManageHistory extends Component {
 
@@ -15,8 +16,8 @@ class ManageHistory extends Component {
         this.state = {
             currentDate: moment(new Date()).startOf('day').valueOf(),
             dataHistories: [],
-            //isOpenDesHistoryModal: false
-            //dataModal: {},
+            isOpenDetailDesModal: false,
+            dataModal: {},
             //isShowLoading: false
         }
     }
@@ -57,27 +58,27 @@ class ManageHistory extends Component {
     }
 
     handleBtnDetail = (item) => {
-        // let data = {
-        //     descriptionHTML: item.descriptionHTML
-        // }
-        // this.setState({
-        //     isOpenDesHistoryModal: true,
-        //     dataModal: data
-        // })
-        alert('Yes')
+        let data = {
+            descriptionHTML: item.descriptionHTML
+        }
+        this.setState({
+            isOpenDetailDesModal: true,
+            dataModal: data
+        })
     }
 
-    // closeDetailModal = () => {
-    //     this.setState({
-    //         isOpenDesHistoryModal: false,
-    //         //dataModal: {}
-    //     })
-    // }
+    closeDetailDesModal = () => {
+        this.setState({
+            isOpenDetailDesModal: false,
+            dataModal: {}
+        })
+    }
+
 
     render() {
-        let { dataHistories } = this.state;
+        let { dataHistories, isOpenDetailDesModal, dataModal } = this.state;
         let { language } = this.props
-        console.log('check dataHistories', this.state)
+        //console.log('check dataHistories', this.state)
         return (
             <>
                 <LoadingOverlay
@@ -146,6 +147,12 @@ class ManageHistory extends Component {
                             </div>
                         </div>
                     </div>
+
+                    <DetailDesModal
+                        isOpenModal={isOpenDetailDesModal}
+                        dataModal={dataModal}
+                        closeDetailDesModal={this.closeDetailDesModal}
+                    />
 
                 </LoadingOverlay>
             </>
