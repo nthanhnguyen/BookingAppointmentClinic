@@ -58,7 +58,7 @@ class RemedyModal extends Component {
 
     handleSendRemedy = () => {
         this.props.sendRemedy(this.state)
-        console.log('Check pros Send: ', this.state)
+        //console.log('Check pros Send: ', this.state)
     }
 
     handleEditorChange = ({ html, text }) => {

@@ -36,16 +36,16 @@ class DetailDesModal extends Component {
         }
     }
 
-    handleOnChangeImage = async (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file) {
-            let base64 = await CommonUtils.getBase64(file);
-            this.setState({
-                imgBase64: base64
-            })
-        }
-    }
+    // handleOnChangeImage = async (event) => {
+    //     let data = event.target.files;
+    //     let file = data[0];
+    //     if (file) {
+    //         let base64 = await CommonUtils.getBase64(file);
+    //         this.setState({
+    //             imgBase64: base64
+    //         })
+    //     }
+    // }
 
 
     // handleEditorChange = ({ html, text }) => {
@@ -73,6 +73,18 @@ class DetailDesModal extends Component {
 
                 </div>
 
+                <ModalBody>
+                    <div className='row'>
+                        <div className='detail-infor-doctor'>
+                            {dataModal && dataModal.descriptionHTML && dataModal.descriptionHTML &&
+                                <div dangerouslySetInnerHTML={{ __html: dataModal.descriptionHTML }}></div>
+                            }
+                        </div>
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color='secondary' onClick={closeDetailDesModal}>Close</Button>
+                </ModalFooter>
             </Modal>
         )
     }

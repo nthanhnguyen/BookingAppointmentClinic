@@ -8,6 +8,9 @@ import { getAllHistoriesForDoctor } from '../../../services/userService';
 import moment from 'moment';
 import DatePicker from '../../../components/Input/DatePicker';
 import DetailDesModal from './DetailDesModal';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+import { CommonUtils } from '../../../utils';
 
 class ManageHistory extends Component {
 
@@ -18,11 +21,12 @@ class ManageHistory extends Component {
             dataHistories: [],
             isOpenDetailDesModal: false,
             dataModal: {},
+            previewImgURL: ''
             //isShowLoading: false
         }
     }
 
-    getDataHistories = async () => {
+    getDataHistories = async () => {//////////////////
         let { user } = this.props;
         let { currentDate } = this.state;
         let formatedDate = new Date(currentDate).getTime();
@@ -32,8 +36,14 @@ class ManageHistory extends Component {
             date: formatedDate
         })
         if (res && res.errCode === 0) {
+            let imageBase64 = '';
+            if (res.data.files) {
+                imageBase64 = new Buffer(res.data.files, 'base64').toString('binary');
+            }
+            console.log('check resdate: ', res.data)
             this.setState({
-                dataHistories: res.data
+                dataHistories: res.data,
+                //previewImgURL: imageBase64,
             })
         }
     }
@@ -74,11 +84,30 @@ class ManageHistory extends Component {
         })
     }
 
+    handleOnChangeImage = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImgURL: objectUrl
+            })
+        }
+    }
+
+    openPreviewImage = () => {
+        if (!this.state.previewImgURL) return;
+
+        this.setState({
+            isOpen: true
+        })
+    }
+
 
     render() {
-        let { dataHistories, isOpenDetailDesModal, dataModal } = this.state;
+        let { dataHistories, isOpenDetailDesModal, dataModal, imageBase64 } = this.state;
         let { language } = this.props
-        //console.log('check dataHistories', this.state)
+        console.log('check dataHistories', this.state)
         return (
             <>
                 <LoadingOverlay
@@ -100,7 +129,7 @@ class ManageHistory extends Component {
                                 />
                             </div>
                             <div className='col-12 table-manage-patient'>
-                                <table id="patients" style={{ width: '100%' }}>
+                                <table id="histories" style={{ width: '100%' }}>
                                     <tbody>
                                         <tr>
                                             <th>STT</th>
@@ -129,14 +158,33 @@ class ManageHistory extends Component {
                                                         </button>
 
                                                     </td>
-                                                    <td>{item.patientData.files}</td>
+                                                    <td>
+
+                                                        <div className='preview-img-container'>
+                                                            <input id="previewImg" type="file" hidden
+                                                                onChange={(event) => this.handleOnChangeImage(event)}
+                                                            />
+
+
+                                                            <div className="preview-image"
+                                                                style={{ backgroundImage: `url(${this.state.previewImgURL})` }}
+                                                                onClick={() => this.openPreviewImage()}
+                                                            >
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             )
+
+
                                         })
                                             // :
                                             // <tr>
                                             //     <td colSpan="6" style={{ textAlign: "center" }}>No data</td>
                                             // </tr>
+
+
 
                                         }
 
@@ -146,6 +194,7 @@ class ManageHistory extends Component {
 
                             </div>
                         </div>
+
                     </div>
 
                     <DetailDesModal

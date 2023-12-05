@@ -53,8 +53,6 @@ class TableManageUser extends Component {
         console.log('check edit: ', user)
     }
     render() {
-        console.log('Check create: ', this.props.listUsers)
-        console.log('Check redux: ', this.state.usersRedux)
         let arrUsers = this.state.usersRedux;
 
         return (

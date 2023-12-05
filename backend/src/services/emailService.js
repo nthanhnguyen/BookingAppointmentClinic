@@ -30,7 +30,7 @@ let getBodyHTMLEmail = (dataSend) => {
   let result = ''
   if (dataSend.language === 'vi') {
     result = `<h3> Xin Chào ${dataSend.patientName}! </h3>
-    <p> Bạn nhận được email này vì đã đặt lịch khám bệnh online trên Care4u</p>
+    <p> Bạn nhận được email này vì đã đặt lịch khám bệnh online trên Care4u.</p>
     <p> Thông tin đặt lệnh khám bệnh:</p>
     <div><b>Thời gian ${dataSend.time}</b></div>
     <div><b>Bác Sĩ ${dataSend.doctorName}</b></div>
@@ -40,12 +40,12 @@ let getBodyHTMLEmail = (dataSend) => {
       <a href =${dataSend.redirectLink} target = "_blank">Click here</a>
     </div>
 
-    <div> Xin chân thành cảm ơn </div>
+    <div> Xin chân thành cảm ơn! </div>
     ` // html body`
   }
   if (dataSend.language === 'en') {
     result = `<h3> HeLLo ${dataSend.patientName}! </h3>
-    <p> You received this email because you made an online medical appointment on Care4u</p>
+    <p> You received this email because you made an online medical appointment on Care4u.</p>
     <p> Information on ordering medical examination:</p>
     <div><b>Time ${dataSend.time}</b></div>
     <div><b>Doctor${dataSend.doctorName}</b></div>
@@ -55,7 +55,7 @@ let getBodyHTMLEmail = (dataSend) => {
       <a href =${dataSend.redirectLink} target = "_blank">Click here</a>
     </div>
 
-    <div> Sincerely thank </div>
+    <div> Best Regards! </div>
     ` // html body`
   }
   return result;
@@ -64,18 +64,19 @@ let getBodyHTMLEmail = (dataSend) => {
 let getBodyHTMLEmailRemedy = (dataSend) => {
   let result = ''
   if (dataSend.language === 'vi') {
-    result = `<h3> Xin Chào ${dataSend.patientName}! </h3>
-    <p> Bạn nhận được email này vì đã đặt lịch khám bệnh online trên Care4u thành công</p>
-    <p> Thông tin đơn thuốc/hóa đơn được gửi trong file đính kèm</p>
-    
-    <div> Xin chân thành cảm ơn </div>
+    result = `<h2> Xin Chào ${dataSend.patientName}! </h2>
+    <p> Bạn nhận được email này vì đã hoàn thành quá trình khám bệnh khi đặt lịch online trên Care4u.</p>
+    <h4> Bác sĩ xin gửi đến bạn kết quả khám bệnh: </h4>
+    <div dangerouslySetInnerHTML={{ __html: ${dataSend.descriptionHTML} </div>
+    <div> Xin chân thành cảm ơn! </div>
     ` // html body`
   }
   if (dataSend.language === 'en') {
-    result = `<h3> Dear ${dataSend.patientName}! </h3>
-    <p> You received this email because you made an online medical appointment on Care4u</p>
-    <p>bla bla</p>
-    <div> Sincerely thank </div>
+    result = `<h2> Dear ${dataSend.patientName}! </h2>
+    <p> You received this email because you completed the medical examination process when booking online on Care4u.</p>
+    <h4> The doctor would like to send you the medical examination results: </h4>
+    <div dangerouslySetInnerHTML={{ __html: ${dataSend.descriptionHTML} </div>
+    <div> Best Regards! </div>
     ` // html body`
   }
   return result;
@@ -104,7 +105,7 @@ let sendAttachment = async (dataSend) => {
       let info = await transporter.sendMail({
         from: '"Care4u" <chauquocthai10@gmail.com>', // sender address
         to: dataSend.email, // list of receivers
-        subject: "Kết quả đặt lịch khám bệnh", // Subject line
+        subject: "Kết quả quá trình khám bệnh khám bệnh", // Subject line
         html: getBodyHTMLEmailRemedy(dataSend),
         attachments: [
           {

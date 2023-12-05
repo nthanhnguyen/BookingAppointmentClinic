@@ -176,7 +176,6 @@ class UserRedux extends Component {
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
         }
-        console.log('check edit from parent: ', user)
         this.setState({
             email: user.email,
             password: 'HARDCODE',
@@ -216,7 +215,7 @@ class UserRedux extends Component {
             address, gender, position, role, avatar
         } = this.state;
 
-
+        console.log('Check user: ', this.state)
         return (
             <div className='user-redux-container'>
                 <div className="title" >User Redux</div>

@@ -452,8 +452,6 @@ let sendRemedy = (data) => {
                     await appointment.save()
                 }
 
-                await emailService.sendAttachment(data);
-
                 await db.History.create({
                     patientID: data.patientId,
                     doctorID: data.doctorId,
@@ -463,6 +461,8 @@ let sendRemedy = (data) => {
                     date: data.date,
                     timeType: data.timeType
                 })
+
+                await emailService.sendAttachment(data);
 
                 resolve({
                     errCode: 0,

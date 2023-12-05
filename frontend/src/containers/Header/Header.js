@@ -38,7 +38,7 @@ class Header extends Component {
         this.setState({
             menuApp: menu
         })
-        console.log('Hoi userinfor: ', this.props.userInfo)
+        //console.log('Hoi userinfor: ', this.props.userInfo)
     }
 
     render() {

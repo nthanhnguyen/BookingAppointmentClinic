@@ -111,7 +111,7 @@ class ManagePatient extends Component {
                 isShowLoading: false
             })
             toast.error('Something wrongs...');
-            console.log('error send remedy: ', res)
+            //console.log('error send remedy: ', res)
         }
     }
 
