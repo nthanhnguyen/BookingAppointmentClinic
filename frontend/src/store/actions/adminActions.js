@@ -3,7 +3,7 @@ import {
     getAllCodeService, createNewUserService,
     getAllUsers, deleteUserService, editUserService,
     getTopDoctorHomeService, getAllDoctors,
-    saveDetailDoctorService, getAllSpecialty,getAllClinic
+    saveDetailDoctorService, getAllSpecialty, getAllClinic
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -127,8 +127,8 @@ export const fetchAllUsersStart = () => {
         try {
 
             let res = await getAllUsers("ALL");
-            let res1 = await getTopDoctorHomeService(3);
-            console.log('check res get top doctor', res1);
+            //let res1 = await getTopDoctorHomeService();
+            //console.log('check res get top doctor', res1);
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUsersSuccess(res.users.reverse()));
             }
@@ -208,7 +208,7 @@ export const deleteUserSuccess = () => ({
 })
 
 export const deleteUserFailed = () => ({
-    type: actionTypes.DELETE_USER_SUCCESS
+    type: actionTypes.DELETE_USER_FAILED
 })
 
 //let res1 = await getTopDoctorHomeService(3);
@@ -216,7 +216,7 @@ export const deleteUserFailed = () => ({
 export const fetchTopDoctor = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await getTopDoctorHomeService('3');
+            let res = await getTopDoctorHomeService('10');/////////////
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,

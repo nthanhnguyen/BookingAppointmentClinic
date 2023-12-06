@@ -515,6 +515,29 @@ let getAllHistoriesForDoctor = (doctorID, date) => {
     })
 }
 
+let deletePatientBooking = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        let foundBooking = await db.Booking.findOne({
+            where: { id: inputId }
+        })
+        if (!foundBooking) {
+            resolve({
+                errCode: 2,
+                errMessage: `The Booking isn't exist`
+            })
+        }
+
+        await db.Booking.destroy({
+            where: { id: inputId }
+        })
+
+        resolve({
+            errCode: 0,
+            errMessage: 'The Booking is deleted!'
+        })
+    })
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -526,5 +549,6 @@ module.exports = {
     getProfileDoctorById: getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
     sendRemedy: sendRemedy,
-    getAllHistoriesForDoctor: getAllHistoriesForDoctor
+    getAllHistoriesForDoctor: getAllHistoriesForDoctor,
+    deletePatientBooking: deletePatientBooking
 }

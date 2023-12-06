@@ -1,0 +1,52 @@
+/* DetailDesModal.scss */
+
+.booking-modal-container {
+    max-width: 800px;
+    /* Set the maximum width of the modal container */
+    margin: 0 auto;
+    /* Center the modal horizontally */
+}
+
+.modal-header {
+    background-color: #007bff;
+    /* Set the background color of the modal header */
+    color: #fff;
+    /* Set the text color of the modal header */
+    padding: 15px;
+    /* Add padding to the modal header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    /* Remove default margin for the modal title */
+}
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+    /* Add padding to the modal body */
+}
+
+.row {
+    margin-bottom: 15px;
+    /* Add margin to the row for spacing */
+}
+
+.detail-infor-doctor {
+    /* Add any specific styles for the detail information container */
+}
+
+/* Style the close button on hover */
+.close:hover {
+    text-decoration: underline;
+}

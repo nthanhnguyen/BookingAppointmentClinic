@@ -144,6 +144,17 @@ let getAllHistoriesForDoctor = async (req, res) => {
         })
     }
 }
+
+let deletePatientBooking = async (req, res) => {
+    if (!req.query.id) {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: 'Missing required parameter'
+        })
+    }
+    let message = await doctorService.deletePatientBooking(req.query.id);
+    return res.status(200).json(message);
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -155,5 +166,6 @@ module.exports = {
     getProfileDoctorById: getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
     sendRemedy: sendRemedy,
-    getAllHistoriesForDoctor: getAllHistoriesForDoctor
+    getAllHistoriesForDoctor: getAllHistoriesForDoctor,
+    deletePatientBooking: deletePatientBooking
 };

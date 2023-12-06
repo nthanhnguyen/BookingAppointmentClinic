@@ -4,7 +4,7 @@ import './ManagePatient.scss';
 import { LANGUAGES } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
 import DatePicker from '../../../components/Input/DatePicker';
-import { getAllPatientForDoctor, postSendRemedy } from '../../../services/userService';
+import { getAllPatientForDoctor, postSendRemedy, deletePatientBookingService } from '../../../services/userService';
 import moment from 'moment';
 import RemedyModal from './RemedyModal';
 import { toast } from 'react-toastify';
@@ -42,6 +42,7 @@ class ManagePatient extends Component {
                 dataPatient: res.data
             })
         }
+        //console.log('checkkkk: ', res.data)
     }
 
 
@@ -115,9 +116,19 @@ class ManagePatient extends Component {
         }
     }
 
+    handleDeletePatientBooking = async (bookingId) => {
+        let res = await deletePatientBookingService(bookingId);
+        if (res && res.errCode === 0) {
+            toast.success('Delete Patient Booking succeed!');
+            await this.getDataPatient();
+        }
+        else toast.error('Delete Patient Booking failed!');
+    }
+
     render() {
         let { dataPatient, isOpenRemedyModal, dataModal } = this.state;
         let { language } = this.props
+        //console.log('dataPatient check: ', dataPatient)
         return (
             <>
                 <LoadingOverlay
@@ -165,6 +176,9 @@ class ManagePatient extends Component {
                                                     <td>
                                                         <button className='mp-btn-confirm'
                                                             onClick={() => this.handleBtnConfirm(item)}>Xác nhận
+                                                        </button>
+                                                        <button className='mp-btn-delete'
+                                                            onClick={() => this.handleDeletePatientBooking(item.id)}>Xóa
                                                         </button>
 
                                                     </td>

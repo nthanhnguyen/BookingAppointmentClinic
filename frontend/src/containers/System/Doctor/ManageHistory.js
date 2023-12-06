@@ -21,12 +21,11 @@ class ManageHistory extends Component {
             dataHistories: [],
             isOpenDetailDesModal: false,
             dataModal: {},
-            previewImgURL: ''
             //isShowLoading: false
         }
     }
 
-    getDataHistories = async () => {//////////////////
+    getDataHistories = async () => {
         let { user } = this.props;
         let { currentDate } = this.state;
         let formatedDate = new Date(currentDate).getTime();
@@ -36,15 +35,10 @@ class ManageHistory extends Component {
             date: formatedDate
         })
         if (res && res.errCode === 0) {
-            let imageBase64 = '';
-            if (res.data.files) {
-                imageBase64 = new Buffer(res.data.files, 'base64').toString('binary');
-            }
-            console.log('check resdate: ', res.data)
             this.setState({
                 dataHistories: res.data,
-                //previewImgURL: imageBase64,
             })
+            //console.log('check res.data: ', res.data)
         }
     }
 
@@ -77,6 +71,7 @@ class ManageHistory extends Component {
         })
     }
 
+
     closeDetailDesModal = () => {
         this.setState({
             isOpenDetailDesModal: false,
@@ -84,30 +79,18 @@ class ManageHistory extends Component {
         })
     }
 
-    handleOnChangeImage = async (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file) {
-            let objectUrl = URL.createObjectURL(file);
-            this.setState({
-                previewImgURL: objectUrl
-            })
-        }
-    }
-
-    openPreviewImage = () => {
-        if (!this.state.previewImgURL) return;
+    openPreviewImage = (item) => {
+        if (!item) return;
 
         this.setState({
             isOpen: true
         })
     }
 
-
     render() {
         let { dataHistories, isOpenDetailDesModal, dataModal, imageBase64 } = this.state;
         let { language } = this.props
-        console.log('check dataHistories', this.state)
+        //console.log('check dataHistories', this.state)
         return (
             <>
                 <LoadingOverlay
@@ -145,6 +128,8 @@ class ManageHistory extends Component {
                                                 item.timeTypeDataPatient.valueVi : item.timeTypeDataPatient.valueEn;
                                             let gender = language === LANGUAGES.VI ?
                                                 item.patientData.genderData.valueVi : item.patientData.genderData.valueEn;
+                                            let imageBase64 = new Buffer(item.files, 'base64').toString('binary');
+
                                             return (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
@@ -159,22 +144,25 @@ class ManageHistory extends Component {
 
                                                     </td>
                                                     <td>
-
                                                         <div className='preview-img-container'>
-                                                            <input id="previewImg" type="file" hidden
-                                                                onChange={(event) => this.handleOnChangeImage(event)}
-                                                            />
-
-
                                                             <div className="preview-image"
-                                                                style={{ backgroundImage: `url(${this.state.previewImgURL})` }}
-                                                                onClick={() => this.openPreviewImage()}
+                                                                style={{ backgroundImage: `url(${imageBase64})` }}
+                                                                onClick={() => this.openPreviewImage(imageBase64)}
                                                             >
-
                                                             </div>
+                                                            {this.state.isOpen === true &&
+                                                                <Lightbox
+                                                                    mainSrc={imageBase64}
+                                                                    onCloseRequest={() => this.setState({ isOpen: false })}
+                                                                />
+                                                            }
+
                                                         </div>
+
                                                     </td>
+
                                                 </tr>
+
                                             )
 
 

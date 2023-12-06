@@ -36,25 +36,6 @@ class DetailDesModal extends Component {
         }
     }
 
-    // handleOnChangeImage = async (event) => {
-    //     let data = event.target.files;
-    //     let file = data[0];
-    //     if (file) {
-    //         let base64 = await CommonUtils.getBase64(file);
-    //         this.setState({
-    //             imgBase64: base64
-    //         })
-    //     }
-    // }
-
-
-    // handleEditorChange = ({ html, text }) => {
-    //     this.setState({
-    //         descriptionHTML: html,
-    //         descriptionMarkdown: text
-    //     })
-    // }
-
     render() {
         let { isOpenModal, closeDetailDesModal, dataModal } = this.props;
         //console.log('descriptionHTML: ', this.state)

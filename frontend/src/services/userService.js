@@ -85,6 +85,9 @@ const postSendRemedy = (data) => {
 const getAllHistoriesForDoctor = (data) => {
     return axios.get(`/api/get-all-histories-for-doctor?doctorID=${data.doctorID}&date=${data.date}`)
 }
+const deletePatientBookingService = (bookingId) => {
+    return axios.delete(`/api/delete-patient-booking?id=${bookingId}`);
+}
 export {
     handleLoginApi, getAllUsers,
     createNewUserService, deleteUserService,
@@ -97,5 +100,5 @@ export {
     getAllSpecialty, getAllDetailSpecialtyById, createNewClinic,
     getAllClinic, getAllDetailClinicById,
     getAllPatientForDoctor, postSendRemedy,
-    getAllHistoriesForDoctor
+    getAllHistoriesForDoctor, deletePatientBookingService
 };
