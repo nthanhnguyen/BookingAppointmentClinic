@@ -3,7 +3,8 @@ import {
     getAllCodeService, createNewUserService,
     getAllUsers, deleteUserService, editUserService,
     getTopDoctorHomeService, getAllDoctors,
-    saveDetailDoctorService, getAllSpecialty, getAllClinic
+    saveDetailDoctorService, getAllSpecialty, getAllClinic,
+    saveClinicService
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -364,3 +365,57 @@ export const fetchRequiredDoctorInforSuccess = (allRequiredData) => ({
 export const fetchRequiredDoctorInforFailed = () => ({
     type: actionTypes.FETCH_REQUIRED_Doctor_Infor_FAILED
 })
+
+export const fetchAllClinics = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllClinic();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_REQUIRED_CLINIC_SUCCESS,
+                    dataClinic: res.data //
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_REQUIRED_CLINIC_FAILED
+                })
+            }
+
+        } catch (e) {
+            console.log('FETCH_REQUIRED_CLINIC_FAILED: ', e)
+            dispatch({
+                type: actionTypes.FETCH_REQUIRED_CLINIC_FAILED
+            })
+
+        }
+    }
+}
+
+
+export const saveClinic = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveClinicService(data);
+            if (res && res.errCode === 0) {
+                toast.success("Save Clinic Infor succeed!")
+                dispatch({
+                    type: actionTypes.SAVE_CLINIC_SUCCESS,
+                })
+            } else {
+                console.log('Save Clinic Infor failed: ', res)
+                toast.error('Save Clinic Infor error!');
+                dispatch({
+                    type: actionTypes.SAVE_CLINIC_FAILED
+                })
+            }
+
+        } catch (e) {
+            toast.error('Save Clinic Infor error!');
+            console.log('Save Clinic Infor failed: ', e)
+            dispatch({
+                type: actionTypes.SAVE_CLINIC_FAILED
+            })
+
+        }
+    }
+}

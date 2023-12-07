@@ -6,8 +6,12 @@ import { FormattedMessage } from 'react-intl';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils'
-import { createNewClinic } from '../../../services/userService'
+import { saveClinicService, getAllDetailClinicById } from '../../../services/userService'
 import { toast } from "react-toastify"
+import Select from 'react-select';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+import * as actions from '../../../store/actions';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -20,19 +24,37 @@ class ManageClinic extends Component {
             imageBase64: '',
             descriptionHTML: '',
             descriptionMarkdown: '',
-            address:'',
+            address: '',
+            listClinics: [],
+            selectedOption: ''
 
         }
     }
 
     async componentDidMount() {
+        this.props.fetchAllClinics();
+        console.log('Check: ', this.state)
+    }
 
+    buildDataInputSelect = (inputData) => {
+        let result = [];
+        if (inputData && inputData.length > 0) {
+            inputData.map((item, index) => {
+                let object = {};
+                object.label = item.name;
+                object.value = item
+                result.push(object)
+            })
+        }
     }
 
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.language !== prevProps.language) {
-
+        if (prevProps.allClinics !== this.props.allClinics) {
+            let dataSelect = this.buildDataInputSelect(this.props.allClinics)
+            this.setState({
+                listClinics: dataSelect
+            })
         }
     }
 
@@ -65,13 +87,13 @@ class ManageClinic extends Component {
     }
 
     handleSaveNewClinic = async () => {
-        let res = await createNewClinic(this.state)
+        let res = await saveClinicService(this.state)
         if (res && res.errCode === 0) {
             toast.success('Add new clinic succeed!')
             this.setState({
                 name: '',
                 imageBase64: '',
-                address:'',
+                address: '',
                 descriptionHTML: '',
                 descriptionMarkdown: ''
             })
@@ -81,7 +103,19 @@ class ManageClinic extends Component {
         }
     }
 
+    openPreviewImage = () => {
+        if (!this.state.imageBase64) return;
+
+        this.setState({
+            isOpen: true
+        })
+    }
+
+
+
     render() {
+        let { listClinics } = this.state;
+        console.log('listClinics check: ', listClinics)
         return (
             <div className='manage-specialty-container'>
                 <div className='ms-title'>Quản lý phòng khám</div>
@@ -97,11 +131,32 @@ class ManageClinic extends Component {
 
                     <div className='col-6 form-group'>
                         <label>Ảnh Phòng khám</label>
-                        <input className='form-control-file' type='file'
-                            onChange={(event) => this.handleOnChangeImage(event)}
-                        />
+                        <div className='preview-img-container'>
+                            <input id="previewImg" type="file" hidden
+                                onChange={(event) => this.handleOnChangeImage(event)}
+                            />
 
+                            <label className="label-upload" htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
+                            <div className="preview-image"
+                                style={{ backgroundImage: `url(${this.state.imageBase64})` }}
+                                onClick={() => this.openPreviewImage()}
+                            >
+
+                            </div>
+                        </div>
                     </div>
+                    <div className='col-6 form-group'>
+
+                        <label>Chọn phòng khám</label>
+                        <Select
+                            value={this.state.selectedOption}
+                            // onChange={this.handleChangeSelect}/////////////////
+                            options={this.state.listClinics}
+                            placeholder={<label>Chọn phòng khám</label>}
+
+                        />
+                    </div>
+
                     <div className='col-6 form-group'>
                         <label>Địa Chỉ Phòng Khám</label>
                         <input className='form-control' type='text' value={this.state.address}
@@ -125,6 +180,14 @@ class ManageClinic extends Component {
                     </div>
 
                 </div>
+
+                {this.state.isOpen === true &&
+                    <Lightbox
+                        mainSrc={this.state.imageBase64}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+
+                    />
+                }
             </div>
         )
     }
@@ -132,13 +195,14 @@ class ManageClinic extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        allClinics: state.admin.allClinics,
         language: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchAllClinics: () => dispatch(actions.fetchAllClinics()),
     };
 };
 
