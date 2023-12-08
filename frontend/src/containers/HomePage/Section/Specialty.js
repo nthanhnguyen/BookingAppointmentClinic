@@ -34,7 +34,7 @@ class Specialty extends Component {
     let { dataSpecialty } = this.state;
 
     return (
-      <div className='section-share section-specialty'>
+      <div className='section-share section-specialty' id='specialty'>
         <div className='section-container'>
           <div className='section-header'>
             <span className='title-section'>Chuyên khoa</span>

@@ -32,7 +32,7 @@ class MedicalFacility extends Component {
     let { dataClinics } = this.state;
 
     return (
-      <div className='section-share section-medical-facility'>
+      <div className='section-share section-medical-facility' id='facility'>
         <div className='section-container'>
           <div className='section-header'>
             <span className='title-section'>Cơ sở y tế nổi bật</span>

@@ -39,7 +39,7 @@ class OutStandingDoctor extends Component {
           arrDoctors = arrDoctors.concat(arrDoctors).concat(arrDoctors)
           console.log('Care: ', arrDoctors)
           return (
-               <div className='section-share section-outstanding-doctor'>
+               <div className='section-share section-outstanding-doctor' id='doctor'>
                     <div className='section-container'>
                          <div className='section-header'>
                               <span className='title-section'>
