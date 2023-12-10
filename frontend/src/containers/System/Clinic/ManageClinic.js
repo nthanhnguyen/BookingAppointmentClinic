@@ -33,7 +33,6 @@ class ManageClinic extends Component {
 
     async componentDidMount() {
         this.props.fetchAllClinics();
-        console.log('Check: ', this.state)
     }
 
     buildDataInputSelect = (inputData) => {
@@ -42,10 +41,11 @@ class ManageClinic extends Component {
             inputData.map((item, index) => {
                 let object = {};
                 object.label = item.name;
-                object.value = item
+                object.value = item.id
                 result.push(object)
             })
         }
+        return result;
     }
 
 
@@ -56,6 +56,13 @@ class ManageClinic extends Component {
                 listClinics: dataSelect
             })
         }
+        // if (this.props.language !== prevProps.language) {
+        //     console.log('check this.props.allClinics: ', this.props.allClinics)
+        //     let dataSelect = this.buildDataInputSelect(this.props.allClinics)
+        //     this.setState({
+        //         listClinics: dataSelect
+        //     })
+        // }
     }
 
     handleEditorChange = ({ html, text }) => {
@@ -111,11 +118,27 @@ class ManageClinic extends Component {
         })
     }
 
+    handleChangeSelect = async (selectedOption) => {
+        this.setState({ selectedOption });
+        let res = await getAllDetailClinicById({ id: selectedOption.value })
+        console.log('check res: ', res)
+        let image = '';
+        if (res.data.image) {
+            image = new Buffer(res.data.image, 'base64').toString('binary');
+        }
+        if (res && res.errCode === 0 && res.data) {
+            this.setState({
+                descriptionHTML: res.data.descriptionHTML,
+                descriptionMarkdown: res.data.descriptionMarkdown,
+                address: res.data.address,
+                imageBase64: image
+            })
+        }
+    };
 
 
     render() {
-        let { listClinics } = this.state;
-        console.log('listClinics check: ', listClinics)
+        //let { listClinics } = this.state;
         return (
             <div className='manage-specialty-container'>
                 <div className='ms-title'>Quản lý phòng khám</div>
@@ -150,7 +173,7 @@ class ManageClinic extends Component {
                         <label>Chọn phòng khám</label>
                         <Select
                             value={this.state.selectedOption}
-                            // onChange={this.handleChangeSelect}/////////////////
+                            onChange={this.handleChangeSelect}/////////////////
                             options={this.state.listClinics}
                             placeholder={<label>Chọn phòng khám</label>}
 

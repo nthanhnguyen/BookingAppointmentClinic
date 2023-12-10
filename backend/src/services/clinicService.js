@@ -34,6 +34,44 @@ let createClinic = (data) => {
         }
     })
 }
+//////////////////////////
+let updateClinic = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id || data.name || !data.address
+                || !data.imageBase64
+                || !data.descriptionHTML
+                || !data.descriptionMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameter'
+                })
+            }
+            let dataClinic = await db.Clinic.findOne({
+                where: { id: data.id },
+                raw: false
+            })
+            if (dataClinic) {
+                dataClinic.name = data.name,
+                    dataClinic.address = data.address,
+                    dataClinic.image = data.imageBase64,
+                    dataClinic.descriptionHTML = data.descriptionHTML,
+                    dataClinic.descriptionMarkdown = data.descriptionMarkdown
+                await dataClinic.save();
+            }
+            resolve({
+                errCode: 0,
+                errMessage: 'Update the user successfully'
+            });
+        } catch (e) {
+            reject({
+                errCode: 1,
+                errMessage: 'User not found'
+            });
+        }
+    })
+}
+
 let getAllClinic = () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -70,7 +108,7 @@ let getDetailClinicById = (inputId) => {
                     where: {
                         id: inputId
                     },
-                    attributes: ['name', 'address', 'descriptionHTML', 'descriptionMarkdown']
+                    attributes: ['name', 'address', 'descriptionHTML', 'descriptionMarkdown', 'image']
                 })
                 if (data) {
                     let doctorClinic = [];
@@ -99,6 +137,7 @@ let getDetailClinicById = (inputId) => {
 
 module.exports = {
     createClinic: createClinic,
+    updateClinic: updateClinic,
     getAllClinic: getAllClinic,
     getDetailClinicById: getDetailClinicById,
 }
