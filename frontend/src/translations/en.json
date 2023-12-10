@@ -57,7 +57,7 @@
             "manage-specialty": "Manage Specialty",
             "manage-handbook": "Manage Handbook",
             "crud": "CRUD user",
-            "crud-redux": "CRUD Redux",
+            "crud-redux": "Mange User",
             "clinic": "Clinics",
             "specialty": "Specialty",
             "handbook": "Handbook"
@@ -69,6 +69,7 @@
         }
     },
     "manage-user": {
+        "title": "Manage User",
         "add": "Add a new user",
         "email": "Email",
         "password": "Password",

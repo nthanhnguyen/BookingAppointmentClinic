@@ -30,14 +30,14 @@ let handleUserLogin = (email, password) => {
                         // userData.errMessage = 'Wrong Password';
                     } else {
                         userData.errCode = 3;
-                        userData.errMessage = 'Wrong Password';
+                        userData.errMessage = 'Wrong Password!';
                         //userData.errorCode = 0;
                         // userData.errMessage = 'Ok',
                         //     userData.user = user;
                     }
                 } else {
                     userData.errCode = 2;
-                    userData.errMessage = `User's not found`
+                    userData.errMessage = `User's not found!`
                 }
 
 

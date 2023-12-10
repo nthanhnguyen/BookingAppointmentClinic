@@ -57,7 +57,7 @@
             "manage-specialty": "Quản Lý Chuyên Khoa",
             "manage-handbook": "Quản Lý Cẩm Nang",
             "crud": "CRUD user",
-            "crud-redux": "CRUD Redux",
+            "crud-redux": "Quản lý người dùng",
             "clinic": "Phòng khám",
             "specialty": "Chuyên khoa",
             "handbook": "Cẩm Nang"
@@ -69,6 +69,7 @@
         }
     },
     "manage-user": {
+        "title": "Quản lý người dùng",
         "add": "Thêm mới người dùng",
         "email": "Email",
         "password": "Mật khẩu",

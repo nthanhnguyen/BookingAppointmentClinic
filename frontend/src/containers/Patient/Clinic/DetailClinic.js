@@ -27,11 +27,11 @@ class DetailClinic extends Component {
 
             let res = await getAllDetailClinicById({
                 id: id,
-                
+
             });
 
-            
-            if (res && res.errCode === 0 ) {
+
+            if (res && res.errCode === 0) {
                 let data = res.data;
                 let arrDoctorId = [];
                 if (data && !_.isEmpty(res.data)) {
@@ -41,11 +41,11 @@ class DetailClinic extends Component {
                             arrDoctorId.push(item.doctorId)
                         })
                     }
-                }      
+                }
                 this.setState({
                     dataDetailClinic: res.data,
                     arrDoctorId: arrDoctorId,
-                    
+
                 })
             }
         }
@@ -54,17 +54,17 @@ class DetailClinic extends Component {
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.language !== prevProps.language) {
-           
+
         }
         if (this.props.doctorId !== prevProps.doctorId) {
             let data = await this.getInforDoctor(this.props.doctorId);
             this.setState({
-              dataProfile: data,
+                dataProfile: data,
             });
-          }
+        }
     }
 
-   
+
 
     render() {
         let { arrDoctorId, dataDetailClinic } = this.state;
@@ -77,17 +77,12 @@ class DetailClinic extends Component {
                     <div className='description-Clinic'>
                         {dataDetailClinic && !_.isEmpty(dataDetailClinic)
                             &&
-                            
-                            <>
-                             <div>{dataDetailClinic.name}</div>
                             < div dangerouslySetInnerHTML={{ __html: dataDetailClinic.descriptionHTML }}>
-
-                            </div></>
-                           
+                            </div>
                         }
 
                     </div>
-                   
+
 
                     {arrDoctorId && arrDoctorId.length > 0 &&
                         arrDoctorId.map((item, index) => {
@@ -98,8 +93,8 @@ class DetailClinic extends Component {
                                             <ProfileDoctor
                                                 doctorId={item}
                                                 isShowDescriptionDoctor={true}
-                                                isShowLinkDetail = {true}
-                                                isShowPrice = {false}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={false}
                                             //dataTime={dataTime}
                                             />
                                         </div>

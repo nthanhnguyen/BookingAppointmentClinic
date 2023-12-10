@@ -35,19 +35,20 @@ class Login extends Component {
         })
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
-            if (data && data.errCode === 1) {
+            if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message
                 })
             }
 
 
-            if (data && data.errCode !== 1) {
+            if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user)
                 console.log('login successful')
             }
 
         }
+
         catch (error) {
             if (error.response) {
                 if (error.response.data) {
@@ -66,7 +67,7 @@ class Login extends Component {
     }
 
     handleKeyDown = (event) => {
-        if(event.key === 'Enter' || event.keyCode === 13) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
             this.handleLogin();
         }
     }
@@ -79,7 +80,7 @@ class Login extends Component {
                     <div className="login-content row">
                         <div className="col-12 text-login">Login</div>
                         <div className="col-12 form-group login-input">
-                            <label>UserName:</label>
+                            <label>User Name:</label>
                             <input type="text" className="form-control"
                                 placeholder='Enter your username'
                                 value={this.state.username}
@@ -90,7 +91,7 @@ class Login extends Component {
                             {this.state.errMessage}
                         </div>
                         <div className="col-12 form-group login-input">
-                            <label>PassWord:</label>
+                            <label>Password:</label>
                             <div className='custom-input-password'>
                                 <input type={this.state.isShowPassword ? 'text' : 'password'}
                                     className="form-control"
@@ -109,13 +110,13 @@ class Login extends Component {
                         <div className='col-12'>
                             <span className='forgot-password'>Forgot your password?</span>
                         </div>
-                        <div className='col-12 text-center mt-3'>
+                        {/* <div className='col-12 text-center mt-3'>
                             <span className='text-other-login '>Or Login With</span>
-                        </div>
-                        <div className='col-12 social-login'>
+                        </div> */}
+                        {/* <div className='col-12 social-login'>
                             <i className="fab fa-google google"></i>
                             <i className="fab fa-facebook-f facebook"></i>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
