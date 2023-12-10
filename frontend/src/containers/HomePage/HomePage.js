@@ -23,7 +23,7 @@ class HomePage extends Component {
         };
         return (
             <div>
-                <HomeHeader isShowBanner ={true} />
+                <HomeHeader isShowBanner={true} />
                 <Specialty
                     settings={settings}
                 />
@@ -33,9 +33,9 @@ class HomePage extends Component {
                 <OutStandingDoctor
                     settings={settings}
                 />
-                <HandBook
+                {/* <HandBook
                     settings={settings}
-                />
+                /> */}
                 <About></About>
                 <HomeFooter />
             </div>
