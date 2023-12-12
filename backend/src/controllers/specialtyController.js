@@ -15,6 +15,21 @@ let createSpecialty = async (req, res) => {
     }
 }
 
+let updateSpecialty = async (req, res) => {
+    try {
+        let response = await specialtyService.updateSpecialty(req.body);
+        return res.status(200).json(response);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json(
+            {
+                errCode: -1,
+                message: 'error from server',
+            }
+        )
+    }
+}
+
 let getAllSpecialty = async (req, res) => {
     try {
         let infor = await specialtyService.getAllSpecialty()
@@ -44,9 +59,20 @@ let getDetailSpecialtyById = async (req, res) => {
         })
     }
 }
-
+let deleteSpecialty = async (req, res) => {
+    if (!req.query.id) {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: 'Missing required parameter'
+        })
+    }
+    let message = await specialtyService.deleteSpecialty(req.query.id);
+    return res.status(200).json(message);
+}
 module.exports = {
     createSpecialty: createSpecialty,
     getAllSpecialty: getAllSpecialty,
-    getDetailSpecialtyById: getDetailSpecialtyById
+    getDetailSpecialtyById: getDetailSpecialtyById,
+    updateSpecialty: updateSpecialty,
+    deleteSpecialty: deleteSpecialty
 }

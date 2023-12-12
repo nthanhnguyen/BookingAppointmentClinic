@@ -34,6 +34,65 @@ let createSpecialty = (data) => {
     })
 }
 
+let updateSpecialty = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id || !data.name
+                || !data.imageBase64
+                || !data.descriptionHTML
+                || !data.descriptionMarkdown) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameter'
+                })
+            }
+            let dataSpecialty = await db.Specialty.findOne({
+                where: { id: data.id },
+                raw: false
+            })
+            if (dataSpecialty) {
+                dataSpecialty.name = data.name;
+                dataSpecialty.image = data.imageBase64;
+                dataSpecialty.descriptionHTML = data.descriptionHTML;
+                dataSpecialty.descriptionMarkdown = data.descriptionMarkdown;
+                await dataSpecialty.save();
+            }
+            resolve({
+                errCode: 0,
+                errMessage: 'Update the specialty successfully'
+            });
+        } catch (e) {
+            reject({
+                errCode: 1,
+                errMessage: 'Specialty not found'
+            });
+        }
+    })
+}
+
+let deleteSpecialty = (specialtyId) => {
+    return new Promise(async (resolve, reject) => {
+        let foundSpecialty = await db.Specialty.findOne({
+            where: { id: specialtyId }
+        })
+        if (!foundSpecialty) {
+            resolve({
+                errCode: 2,
+                errMessage: `The specialty isn't exist`
+            })
+        }
+
+        await db.Specialty.destroy({
+            where: { id: specialtyId }
+        })
+
+        resolve({
+            errCode: 0,
+            errMessage: 'The Specialty is deleted'
+        })
+    })
+}
+
 let getAllSpecialty = () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -70,7 +129,7 @@ let getDetailSpecialtyById = (inputId, location) => {
                     where: {
                         id: inputId
                     },
-                    attributes: ['descriptionHTML', 'descriptionMarkdown']
+                    attributes: ['name', 'image', 'descriptionHTML', 'descriptionMarkdown']
                 })
                 if (data) {
                     let doctorSpecialty = [];
@@ -107,5 +166,7 @@ let getDetailSpecialtyById = (inputId, location) => {
 module.exports = {
     createSpecialty: createSpecialty,
     getAllSpecialty: getAllSpecialty,
-    getDetailSpecialtyById: getDetailSpecialtyById
+    getDetailSpecialtyById: getDetailSpecialtyById,
+    updateSpecialty: updateSpecialty,
+    deleteSpecialty: deleteSpecialty
 }

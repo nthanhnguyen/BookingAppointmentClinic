@@ -1,5 +1,6 @@
 import axios from '../axios';
 
+//User
 const handleLoginApi = (email, password) => {
     return axios.post('/api/login', { email, password });
 };
@@ -18,7 +19,6 @@ const deleteUserService = (userId) => {
         }
     });
 }
-
 const editUserService = (inputData) => {
     return axios.put('api/edit-user', inputData);
 }
@@ -26,6 +26,8 @@ const editUserService = (inputData) => {
 const getAllCodeService = (inputType) => {
     return axios.get(`/api/allcode?type=${inputType}`);
 }
+
+//Doctor
 const getTopDoctorHomeService = (limit) => {
     return axios.get(`/api/top-doctor-home?limit=${limit}`);
 }
@@ -58,8 +60,13 @@ const postPatientBookAppointment = (data) => {
 const postVerifyBookAppointment = (data) => {
     return axios.post('/api/verify-book-appointment', data)
 }
+
+//Specialty
 const createNewSpecialty = (data) => {
     return axios.post('/api/create-new-specialty', data)
+}
+const updateSpecialtyService = (data) => {
+    return axios.put('api/update-specialty', data);
 }
 const getAllSpecialty = (data) => {
     return axios.get('/api/get-all-specialty', data)//bug id specialty #94 35:32
@@ -67,6 +74,11 @@ const getAllSpecialty = (data) => {
 const getAllDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`)
 }
+const deleteSpecialtyService = (specialtyId) => {
+    return axios.delete(`/api/delete-specialty?id=${specialtyId}`);
+}
+
+//Clinic
 const saveClinicService = (data) => {
     return axios.post('/api/create-new-clinic', data)
 }
@@ -79,6 +91,11 @@ const getAllClinic = () => {
 const getAllDetailClinicById = (data) => {
     return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`)
 }
+const deleteClinicService = (clinicId) => {
+    return axios.delete(`/api/delete-clinic?id=${clinicId}`);
+}
+
+//Doctor
 const getAllPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
@@ -91,9 +108,7 @@ const getAllHistoriesForDoctor = (data) => {
 const deletePatientBookingService = (bookingId) => {
     return axios.delete(`/api/delete-patient-booking?id=${bookingId}`);
 }
-const deleteClinicService = (clinicId) => {
-    return axios.delete(`/api/delete-clinic?id=${clinicId}`);
-}
+
 export {
     handleLoginApi, getAllUsers,
     createNewUserService, deleteUserService,
@@ -107,5 +122,6 @@ export {
     getAllClinic, getAllDetailClinicById,
     getAllPatientForDoctor, postSendRemedy,
     getAllHistoriesForDoctor, deletePatientBookingService,
-    updateClinicService, deleteClinicService
+    updateClinicService, deleteClinicService,
+    updateSpecialtyService, deleteSpecialtyService
 };

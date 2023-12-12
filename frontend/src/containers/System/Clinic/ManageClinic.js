@@ -28,7 +28,6 @@ class ManageClinic extends Component {
             listClinics: [],
             selectedOption: '',
             action: CRUD_ACTONS.CREATE
-
         }
     }
 
@@ -94,7 +93,7 @@ class ManageClinic extends Component {
         }
     }
 
-    handleSaveNewClinic = async () => {
+    handleSaveClinic = async () => {
         let { action } = this.state;
         if (action === CRUD_ACTONS.CREATE) {
             this.props.createClinicRedux({
@@ -113,21 +112,6 @@ class ManageClinic extends Component {
                 selectedOption: '',
                 action: CRUD_ACTONS.CREATE
             })
-            // let res = await saveClinicService(this.state)
-            // if (res && res.errCode === 0) {
-            //     toast.success('Add new clinic succeed!')
-            //     this.setState({
-            //         name: '',
-            //         imageBase64: '',
-            //         address: '',
-            //         descriptionHTML: '',
-            //         descriptionMarkdown: ''
-            //     })
-            // }
-            // else {
-            //     toast.error('Something wrongs...')
-            //     console.log('Check err res: ', res)
-            // }
         }
         if (action === CRUD_ACTONS.EDIT) {
             this.props.updateClinicRedux({
@@ -148,6 +132,7 @@ class ManageClinic extends Component {
                 action: CRUD_ACTONS.CREATE
             })
         }
+        this.props.fetchAllClinics();
 
     }
 
@@ -257,7 +242,7 @@ class ManageClinic extends Component {
                     </div>
                     <div className='col-6'>
                         <button className='btn-save-specialty'
-                            onClick={() => this.handleSaveNewClinic()}>Save</button>
+                            onClick={() => this.handleSaveClinic()}>Save</button>
                         <button className='btn-delete-specialty'
                             onClick={() => this.handleDeleteClinic(this.state.selectedOption.value)}>
                             Delete
