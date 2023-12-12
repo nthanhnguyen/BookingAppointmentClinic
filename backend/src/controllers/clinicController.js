@@ -1,5 +1,5 @@
 import clinicService from '../services/clinicService'
-let createClinic =async (req,res) => {
+let createClinic = async (req, res) => {
     try {
         let infor = await clinicService.createClinic(req.body);
         return res.status(200).json(
@@ -42,8 +42,35 @@ let getDetailClinicById = async (req, res) => {
         })
     }
 }
+
+let updateClinic = async (req, res) => {
+    try {
+        let response = await clinicService.updateClinic(req.body);
+        return res.status(200).json(response);
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json(
+            {
+                errCode: -1,
+                message: 'error from server',
+            }
+        )
+    }
+}
+let deleteClinic = async (req, res) => {
+    if (!req.query.id) {
+        return res.status(200).json({
+            errCode: 1,
+            errMessage: 'Missing required parameter'
+        })
+    }
+    let message = await clinicService.deleteClinic(req.query.id);
+    return res.status(200).json(message);
+}
 module.exports = {
     createClinic: createClinic,
-    getAllClinic:getAllClinic,
-    getDetailClinicById:getDetailClinicById,
+    getAllClinic: getAllClinic,
+    getDetailClinicById: getDetailClinicById,
+    updateClinic: updateClinic,
+    deleteClinic: deleteClinic
 }

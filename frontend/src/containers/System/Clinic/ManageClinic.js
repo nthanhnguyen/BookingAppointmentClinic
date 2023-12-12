@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import './ManageClinic.scss';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CRUD_ACTONS } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils'
-import { saveClinicService, getAllDetailClinicById } from '../../../services/userService'
+import { getAllDetailClinicById, deleteClinicService } from '../../../services/userService'
 import { toast } from "react-toastify"
 import Select from 'react-select';
 import Lightbox from 'react-image-lightbox';
@@ -26,7 +26,8 @@ class ManageClinic extends Component {
             descriptionMarkdown: '',
             address: '',
             listClinics: [],
-            selectedOption: ''
+            selectedOption: '',
+            action: CRUD_ACTONS.CREATE
 
         }
     }
@@ -53,7 +54,7 @@ class ManageClinic extends Component {
         if (prevProps.allClinics !== this.props.allClinics) {
             let dataSelect = this.buildDataInputSelect(this.props.allClinics)
             this.setState({
-                listClinics: dataSelect
+                listClinics: dataSelect,
             })
         }
         // if (this.props.language !== prevProps.language) {
@@ -94,20 +95,60 @@ class ManageClinic extends Component {
     }
 
     handleSaveNewClinic = async () => {
-        let res = await saveClinicService(this.state)
-        if (res && res.errCode === 0) {
-            toast.success('Add new clinic succeed!')
+        let { action } = this.state;
+        if (action === CRUD_ACTONS.CREATE) {
+            this.props.createClinicRedux({
+                name: this.state.name,
+                imageBase64: this.state.imageBase64,
+                address: this.state.address,
+                descriptionHTML: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
+            })
             this.setState({
                 name: '',
                 imageBase64: '',
                 address: '',
                 descriptionHTML: '',
-                descriptionMarkdown: ''
+                descriptionMarkdown: '',
+                selectedOption: '',
+                action: CRUD_ACTONS.CREATE
             })
-        } else {
-            toast.error('Something wrongs...')
-            console.log('Check err res: ', res)
+            // let res = await saveClinicService(this.state)
+            // if (res && res.errCode === 0) {
+            //     toast.success('Add new clinic succeed!')
+            //     this.setState({
+            //         name: '',
+            //         imageBase64: '',
+            //         address: '',
+            //         descriptionHTML: '',
+            //         descriptionMarkdown: ''
+            //     })
+            // }
+            // else {
+            //     toast.error('Something wrongs...')
+            //     console.log('Check err res: ', res)
+            // }
         }
+        if (action === CRUD_ACTONS.EDIT) {
+            this.props.updateClinicRedux({
+                id: this.state.selectedOption.value,
+                name: this.state.name,
+                imageBase64: this.state.imageBase64,
+                address: this.state.address,
+                descriptionHTML: this.state.descriptionHTML,
+                descriptionMarkdown: this.state.descriptionMarkdown,
+            })
+            this.setState({
+                name: '',
+                imageBase64: '',
+                address: '',
+                descriptionHTML: '',
+                descriptionMarkdown: '',
+                selectedOption: '',
+                action: CRUD_ACTONS.CREATE
+            })
+        }
+
     }
 
     openPreviewImage = () => {
@@ -121,21 +162,40 @@ class ManageClinic extends Component {
     handleChangeSelect = async (selectedOption) => {
         this.setState({ selectedOption });
         let res = await getAllDetailClinicById({ id: selectedOption.value })
-        console.log('check res: ', res)
+        //console.log('check res: ', res)
         let image = '';
         if (res.data.image) {
             image = new Buffer(res.data.image, 'base64').toString('binary');
         }
         if (res && res.errCode === 0 && res.data) {
             this.setState({
+                name: res.data.name,
                 descriptionHTML: res.data.descriptionHTML,
                 descriptionMarkdown: res.data.descriptionMarkdown,
                 address: res.data.address,
-                imageBase64: image
+                imageBase64: image,
+                action: CRUD_ACTONS.EDIT
             })
         }
     };
 
+    handleDeleteClinic = async (clinicId) => {
+        let res = await deleteClinicService(clinicId);
+        if (res && res.errCode === 0) {
+            toast.success('Delete this clinic succeed!');
+            this.setState({
+                name: '',
+                imageBase64: '',
+                address: '',
+                descriptionHTML: '',
+                descriptionMarkdown: '',
+                selectedOption: '',
+                action: CRUD_ACTONS.CREATE
+            })
+            this.props.fetchAllClinics();
+        }
+        else toast.error('Delete this clinic failed!');
+    }
 
     render() {
         //let { listClinics } = this.state;
@@ -195,10 +255,13 @@ class ManageClinic extends Component {
                             value={this.state.descriptionMarkdown}
                         />
                     </div>
-                    <div className='col-12'>
+                    <div className='col-6'>
                         <button className='btn-save-specialty'
-                            onClick={() => this.handleSaveNewClinic()}
-                        >Save</button>
+                            onClick={() => this.handleSaveNewClinic()}>Save</button>
+                        <button className='btn-delete-specialty'
+                            onClick={() => this.handleDeleteClinic(this.state.selectedOption.value)}>
+                            Delete
+                        </button>
 
                     </div>
 
@@ -226,6 +289,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllClinics: () => dispatch(actions.fetchAllClinics()),
+        createClinicRedux: (data) => dispatch(actions.saveClinic(data)),
+        updateClinicRedux: (data) => dispatch(actions.updateClinic(data)),
     };
 };
 

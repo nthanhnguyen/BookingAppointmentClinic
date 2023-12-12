@@ -40,9 +40,20 @@ class About extends Component {
                     </div>
                     <div className='content-right'>
                         <p>
-                            Tầm quan trọng của khám sức khỏe
+                            Phát hiện sớm bệnh
                         </p>
-
+                        <p>
+                            Tiết kiệm chi phí và thời gian
+                        </p>
+                        <p>
+                            Nâng cao chất lượng cuộc sống
+                        </p>
+                        <p>
+                            Tăng khả năng chữa lành bệnh
+                        </p>
+                        <p>
+                            Có sức khỏe là có tất cả
+                        </p>
                     </div>
                 </div>
 

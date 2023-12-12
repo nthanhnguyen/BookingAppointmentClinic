@@ -1,10 +1,40 @@
 .verify-email-container {
-    .infor-booking {
-        font-size: 17px;
+
+    .content-container {
+        height: 75vh;
+        width: 1170px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+
+        .title-booking-succeed {
+            font-size: 23px;
+            font-weight: 600;
+            margin-top: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            color: blue;
+        }
+
+        .detail-content {
+            background-color: #FBFAF6;
+            font-size: 20px;
+            text-align: justify;
+            padding: 10px 10px;
+        }
+    }
+
+    .title-booking-failed {
+        font-size: 23px;
         font-weight: 600;
         margin-top: 30px;
         text-align: center;
         text-transform: uppercase;
         color: red;
+    }
+
+    p {
+        font-size: 23px;
     }
 }

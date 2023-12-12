@@ -9,7 +9,7 @@ import DoctorExtraInfor from '../Doctor/DoctorExtraInfor';
 import ProfileDoctor from '../Doctor/ProfileDoctor';
 import { getAllCodeService, getAllDetailClinicById } from '../../../services/userService'
 import _ from 'lodash';
-
+import HomeFooter from '../../HomePage/HomeFooter';
 class DetailClinic extends Component {
 
     constructor(props) {
@@ -117,6 +117,7 @@ class DetailClinic extends Component {
                         })
                     }
                 </div>
+                <HomeFooter />
             </div >
 
         )

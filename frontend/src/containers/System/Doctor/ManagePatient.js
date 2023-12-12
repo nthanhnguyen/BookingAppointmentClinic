@@ -104,7 +104,7 @@ class ManagePatient extends Component {
             this.setState({
                 isShowLoading: false
             })
-            toast.success('Send Remedy succeed: ');
+            toast.success('Send Remedy succeed!');
             this.closeRemedyModal();
             await this.getDataPatient();
         } else {

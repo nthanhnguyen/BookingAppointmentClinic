@@ -34,11 +34,11 @@ let createClinic = (data) => {
         }
     })
 }
-//////////////////////////
+
 let updateClinic = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.id || data.name || !data.address
+            if (!data.id || !data.name || !data.address
                 || !data.imageBase64
                 || !data.descriptionHTML
                 || !data.descriptionMarkdown) {
@@ -52,23 +52,46 @@ let updateClinic = (data) => {
                 raw: false
             })
             if (dataClinic) {
-                dataClinic.name = data.name,
-                    dataClinic.address = data.address,
-                    dataClinic.image = data.imageBase64,
-                    dataClinic.descriptionHTML = data.descriptionHTML,
-                    dataClinic.descriptionMarkdown = data.descriptionMarkdown
+                dataClinic.name = data.name;
+                dataClinic.address = data.address;
+                dataClinic.image = data.imageBase64;
+                dataClinic.descriptionHTML = data.descriptionHTML;
+                dataClinic.descriptionMarkdown = data.descriptionMarkdown;
                 await dataClinic.save();
             }
             resolve({
                 errCode: 0,
-                errMessage: 'Update the user successfully'
+                errMessage: 'Update the Clinic successfully'
             });
         } catch (e) {
             reject({
                 errCode: 1,
-                errMessage: 'User not found'
+                errMessage: 'Clinic not found'
             });
         }
+    })
+}
+
+let deleteClinic = (clinicId) => {
+    return new Promise(async (resolve, reject) => {
+        let foundClinic = await db.Clinic.findOne({
+            where: { id: clinicId }
+        })
+        if (!foundClinic) {
+            resolve({
+                errCode: 2,
+                errMessage: `The clinic isn't exist`
+            })
+        }
+
+        await db.Clinic.destroy({
+            where: { id: clinicId }
+        })
+
+        resolve({
+            errCode: 0,
+            errMessage: 'The clinic is deleted'
+        })
     })
 }
 
@@ -140,4 +163,5 @@ module.exports = {
     updateClinic: updateClinic,
     getAllClinic: getAllClinic,
     getDetailClinicById: getDetailClinicById,
+    deleteClinic: deleteClinic
 }

@@ -4,7 +4,7 @@ import {
     getAllUsers, deleteUserService, editUserService,
     getTopDoctorHomeService, getAllDoctors,
     saveDetailDoctorService, getAllSpecialty, getAllClinic,
-    saveClinicService
+    saveClinicService, updateClinicService
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -165,12 +165,12 @@ export const deleteAUser = (userId) => {
                 dispatch(fetchAllUsersStart());
             }
             else {
-                toast.error('deleteUserFailed error')
+                toast.error('Delete User Failed!')
                 dispatch(deleteUserFailed());
             }
         } catch (e) {
             dispatch(deleteUserFailed());
-            toast.error('deleteUserFailed error')
+            toast.error('Delete User Failed!')
         }
     }
 }
@@ -403,7 +403,7 @@ export const saveClinic = (data) => {
                 })
             } else {
                 console.log('Save Clinic Infor failed: ', res)
-                toast.error('Save Clinic Infor error!');
+                toast.error('Save Clinic Infor error1!');
                 dispatch({
                     type: actionTypes.SAVE_CLINIC_FAILED
                 })
@@ -419,3 +419,34 @@ export const saveClinic = (data) => {
         }
     }
 }
+
+export const updateClinic = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateClinicService(data);
+            if (res && res.errCode === 0) {
+                //if (res) {
+                //console.log(res.errCode)
+                toast.success("Edit the clinic succeed!")
+                dispatch(updateClinicSuccess());
+                dispatch(fetchAllClinics());
+            }
+            else {
+                toast.error('Update the clinic failed!')
+                dispatch(updateClinicFailed());
+            }
+        } catch (e) {
+            toast.error('Update the clinic failed');
+            dispatch(updateClinicFailed());
+            console.log('editUserFailed error', e)
+        }
+    }
+}
+
+export const updateClinicSuccess = () => ({
+    type: actionTypes.UPDATE_CLINIC_SUCCESS
+})
+
+export const updateClinicFailed = () => ({
+    type: actionTypes.UPDATE_CLINIC_FAILED
+})
