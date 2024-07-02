@@ -1,4 +1,4 @@
-# BestBags
+# Appointment Scheduling Website
 
 ## Table of contents
 
